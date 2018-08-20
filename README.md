@@ -1,13 +1,32 @@
-# Tutorial Template
+# Habitual
 
-Each tutorial should have a `README.md` at the root with the following things included:
+[Preview Images Here]
 
-1. Preview image or gif of the final product
-1. Last date / minor version of SDKs used the tutorial was tested on
-1. Pre-requisites to understand the tutorial
-1. Objectives for the tutorial
-1. Instructor FAQ (common areas students make get stuck on, bugs they may encounter, etc)
+## Objectives
 
-# Writing your own tutorial
+- Use MVC
+- Use Single Responsibility Principle
+- Use StackViews
+- Use CHP/CCRP
+- Implement a UITableView
+- Implement a UICollectionView
+- Use a SearchBar
+- Use NSUserDefaults
+- Use xib files
 
-Use this repository as a starting point for your tutorial. Each tutorial must follow it's file structure and include all files included in this repository.
+## Description
+
+Create an app to track habits and encourage you to stick to them.
+
+- User can create a new habit by choosing an image (icons will be located within the project) and giving it a name.
+- User can search for a habit within the list.
+- User can delete habits (ask for confirmation first)
+- User can reorder items in the list.
+- User can check/uncheck a habit for the day.
+- User can view information related to each habit such as current streak, longest streak and start date.
+- Information will be saved using NSUserDefaults.
+- Habits should reset each day. 
+
+## Stretch challenges.
+
+Create categories for habits and have them displayed as table sections. This will change how you add habits to each section.
