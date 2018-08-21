@@ -133,7 +133,7 @@ testing to see if everything is wired up correctly.
 
 > [action]
 > Open *MainViewController.xib*. In the bottom left corner of Xcode, locate the *Object Library* and drag in
-> a **Label**. 
+> a **Label**.
 > ![Get a Label](./assets/label.png)
 > Place the *Label* in the middle of the view like so:
 > ![Placing Label](./assets/place_label.png)
@@ -186,12 +186,7 @@ extension MainViewController {
     title = "Habitual"
 >
     // Create a bar button item for the 'Add' button
-    let addButton = UIBarButtonItem(
-      title: "Add",
-      style: .plain,
-      target: self,
-      action: #selector(addHabit(sender:))
-    )
+    let addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addHabit(sender:)))
 >
     // Set the bar button as the right button
     navigationItem.rightBarButtonItem = addButton
