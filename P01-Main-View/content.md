@@ -243,7 +243,11 @@ Now that the navigation bar is set up, let's set up the table view.
 > Now, drag the *Table View* into your view. Don't worry about the placement for now, you are about to use
 > *Auto Layout* to pin the *Table View* where you want it. Locate the button in the bottom right of the view that
 > kind of looks like a little Tie Fighter from Star Wars. Click on it and then make sure your settings match the
-> settings in the image below.
+> settings in the image below. Pay close attention to the numbers in the boxes in the top section. These numbers
+> are constant values that you want to represent the spacing between this view and it's nearest neighbor. Also, 
+> note that the little `I` shaped beams are all solid, this means that you have activated them. The button on the
+> bottom should say, 'Add 4 Constraints', like in the picture. When your settings are good, click the button to add
+> the constraints to the view.
 > ![Add Constraints](./assets/add_constraints.png)
 > Using this popup, you are setting *constraints* on the *Table View*. You are telling *Auto Layout*
 > to make sure that your *Table View* takes up the whole screen by pinning all sides to `0`. Since you do want your
