@@ -4,9 +4,9 @@ slug: getting-started-habitual
 ---
 
 In this tutorial, you are going to make an iOS app that will help users track their daily
-habits. You will not be using any thirs party libraries to create this project, everything
+habits. You will not be using any third party libraries to create this project, everything
 will be built in and provided by Apple already. One of the biggest differences you will see
-with this app is the way that the views are structured. 
+with this app is the way that the views are structured.
 
 In many tutorials, you will be shown how to make all of your views inside of a storyboard file.
 You will not be using a storyboard in this project. Before you get freaked out by that, let me
@@ -35,7 +35,7 @@ It is okay to deviate from these settings though, and that is exactly what you a
 
 > [action]
 > In the *File Navigator* on the left hand side, right click on *Main.storyboard* and delete it, moving
-> it to the trash. Next, click on the project file at the top of the *File Navigator*. Uunder, 
+> it to the trash. Next, click on the project file at the top of the *File Navigator*. Uunder,
 > *Deployment Information* find the field called *Main Interface* and clear out the name the value there.
 > ![Remove Main](./assets/remove_main.png)
 
@@ -63,10 +63,10 @@ return true
 ```
 >
 
-The comments in the above code should make it pretty clear what is going on, but lets go over it! 
+The comments in the above code should make it pretty clear what is going on, but lets go over it!
 
 The first thing you need to do is create an instance of the `UIWindow` object and make it the size of the
-`main` screen's bounds. The next step is to create an instance of the main view controller, or the first 
+`main` screen's bounds. The next step is to create an instance of the main view controller, or the first
 controller, that you want to load. In this case, you are just creating a temporary controller to see if
 you have hooked up the settings correctly. You set the background to green so that it is different from
 the launch screen. The last step is to set the `rootViewController` of the *window* to the controller that
