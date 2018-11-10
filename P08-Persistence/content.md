@@ -49,7 +49,7 @@ Introducing our first code snippet, lets analyze what is happening!
     - We are making a setter variable which means that we can write to our array of habits
 
     - We are using private because we only want our array of habits to be accessbile through our persistence layer
-
+######
 * This constant is created as a key in User Defaults to store our array of habits
 
     - User Defaults are used to store basic data types as long as the app is installed. Basic data types include strings, floats, arrays, bools, etc.
@@ -80,13 +80,13 @@ As a developer we are concerned firstly, with what the user is interacting with 
 ```
 
 * We make this function mutating because we want to alter the copy of data that is assigned when a user instantiates this persistence layer, for more information on this refer to the difference between value and reference types!
-    
+######
 * Instantiate our user defaults
-
+######
 * Grab our array of habits from our User Defaults for the given key we made earlier
-
+######
 * Decode the json data that it gives us into a swift Habit object, and lastly populate our array of habits with our new Habit object!
-
+######
 Now that the user is able to load a collection of their habits, they have to have a way to create a habit and persist it!
 
 ##### Shall we create a createNewHabit function? 
@@ -110,7 +110,9 @@ Now that the user is able to load a collection of their habits, they have to hav
 * What is this weird '@discardableResult' we are seeing? Well we add this decorator to this function because we are not going to be using the result of this function directly, if not the compiler will generate a warning for us!
  
     - We create a new habit with the attributes that the user passes in
+    ######
     - We are prepending our habit to our habit array as denoted by inserting at index 0
+    ######
     - We then save our new habit and return that new habit
 
 #### Phewwww, we've been at it awhile, make sure you take some time to stretch.
@@ -132,3 +134,10 @@ Now that the user is able to load and create their habits we have to find a way 
         userDefaults.set(habitsData, forKey: PersistenceLayer.userDefaultsHabitsKeyValue)
     }
 ```
+
+* We handle our decoding logic in a guard statement providing us with an early exit if we can't decode our array of habits
+
+    - If we can not decode our array of habits the app will crash with the error statement provided
+    
+######
+* If we do successfully decode our array of habits we then set that json data inside our User Defaults for htis given key!
