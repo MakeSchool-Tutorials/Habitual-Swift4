@@ -44,6 +44,20 @@ To finish off the actual layout on this view controller, let us add a button at 
 >[action]
 > In our interface objects library search for a `Button` and drag and drop it to the bottom of our view controller and change its text to *Pick Photo* 
 
+Unfortunately, we have this new view controller, but no way to get to this view controller from our `HabitsTableViewController`, lets go back into our `HabitsTableViewController` and instead of the adding a new habbit in the add button, we are going to add the code that will allow us to navigate to our new `AddHabitViewController`: 
+> [action]
+> In the `pressAddHabit()` function, create an instance of our new `AddHabitViewController` and also create a `UINavigationController` and put our new `AddHabitViewController` imbedded into our `UINavigationController` and then *present* the `UINavigationController`
+
+```
+    @objc func pressAddHabit(_ sender: UIBarButtonItem) {
+        let addHabitVc = AddHabitViewController.instantiate()
+        let navigationController = UINavigationController(rootViewController: addHabitVc)
+        present(navigationController, animated: true, completion: nil)
+        
+    }
+```
+## Constraining our CollectionView
+
 Great, now let us constrain our new collection view and button 
 
 >[action]
