@@ -103,3 +103,9 @@ Now that the user is able to load a collection of their habits, they have to hav
     }
 ```
 
+* What is this weird '@discardableResult' we are seeing? Well we add this decorator to this function because we are not going to be using the result of this function directly, if not the compiler will generate a warning for us!
+ 
+    - We create a new habit with the attributes that the user passes in
+    - We are prepending our habit to our habit array as denoted by inserting at index 0
+    - We then save our new habit and return that new habit
+
