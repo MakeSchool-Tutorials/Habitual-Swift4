@@ -2,6 +2,9 @@
 title: Creating A Habit 
 slug: creating-habits-habitual
 ---
+TODO: NEED TO ADD THE NAVIGATION FROM TABLE VIEW HOME TO THE ADDHABBITVC AND PUT IT IN ITS OWN NAV CONTROLLER 
+
+
 Our app so far looks to have many of the barebones components that we need to atleast show our habits. However, how can we show off our habits without creating them first? Lets do that now!
 
 # Outline
@@ -65,10 +68,10 @@ In order to be able to show an item in our collection view, we have to first lay
 >[action]
 > In our new xib file, drag an *image view* from the object library and name it *habitImage*. Move it to inside the cell and then contrain the new *image view* to be the size of the cell itself. I know this is alot of stuff to do, but you definately can do this! As a hint, make sure to set your image view's auto layout *constraints to 0 on all sides*.
 
-Our new cell class is also going to need to use a reuse identifier to be set also: 
+Our new cell class is also going to need to use a reuse identifier to be set also and our imageView's content mode needs to be set to Aspect Fill : 
 
 >[action]
-> Select the *collectionViewCell* and then in the *attributes inspector*, set the *identifier* to *habit image cell*. 
+> Select the *collectionViewCell* and then in the *attributes inspector*, set the *identifier* to *habit image cell*. Then click the *imageView* and then click on the *attributes inspector* and set the *content mode* to *Aspect Fill*  
 
 Now we are on our way to be able to write some code!
 
@@ -187,7 +190,120 @@ extension AddHabitViewController: UICollectionViewDataSource, UICollectionViewDe
 }
 ```
 
-We may be encountering more errors with our other missing protocols, but let us ignore that for now. We have a `collectionView(..numberOfItemsInSecion)` function that is telling us that we need to give the collection view the number of items it should be expecting per section. In a collection view can have multiple sections. Lets say you wanted a section that will be designated for possibly for cat photos or also maybe a section for cute dog pictures. In our case though, we will stick to one section and no cat or dog pictures:(. Instead, we will have one section that will display 3 columns and as many rows as we may need depending on the amount of images that are provided.
+We may be encountering more errors with our other missing protocols, but let us ignore that for now. We have a `collectionView(..numberOfItemsInSecion)` function that is telling us that we need to give the collection view the number of items it should be expecting per section. In a collection view can have multiple sections. Lets say you wanted a section that will be designated for possibly for cat photos or also maybe a section for cute dog pictures. In our case though, we will stick to one section and no cat or dog pictures:(. Instead, we will have one section that will display 3 columns and as many rows as we may need depending on the amount of images that are provided. Although we have one section, we want our `collectionView(..numberOfItemsInSecion)` to be as many items as the elements that will be provided to me   Our resulting table view will look like:
+
+> ![Remove Main](./assets/collectionViewResult.png)
+
+The `collectionView(..cellForItemAt)` is an important function that will tell the collection view which item to display at the index path, this will make it really easy to use an array and use `indexpath.row` as an index. Do you have any ideas of what array could be the source of the data we need? 
+
+What about the `Images` that belongs to our Habit model that we created earlier? We can use all the images that we are storing with our models that are getting pulled from our assets and use them to set the image in our cell that we created earlier. Let us create the array at the top of our `AddHabitViewController` and not in our `extension` like this:
+```
+class AddHabitViewController: UIViewController{
+    let habitImages = Habit.Images.allCases
+
+    ...
+}
+```
+
+ We can also add to our collection view functions to reflect some of the ideas that we just discussed. 
+
+>[action]
+> Set the number of items in `collectionView(..numberOfItemsInSecion)` to be the length of our `habitImages` array and within the `collectionView(..cellForItemAt)`create a reusable cell and set the cell's image to be at the `indexPath.row` element in our `habitImages` array. To finish off the thought, we also need to set the amount of sections to only one:
+```
+...
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return habitImages.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: HabitImageCollectionViewCell.identifier,
+            for: indexPath
+            ) as! HabitImageCollectionViewCell
+
+        cell.setImage(image: habitImages[indexPath.row].image)
+        return cell
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+...
+```
+Its coming along now! Our collection view knows exactly which element should populate the cell and it will also know how many elements it will need to have as well as the number of sections it needs.
+
+## Cell Formatting 
+Our content is all finished for our collection view, but now we need to do some formatting using our `UICollectionViewDelegateFlowLayout`. Our Xcode wont stop yelling at us until we finish this last one off. We are getting close:
+
+>[action]
+> add the `collectionView(..minimumLineSpacingForSectionAt:)` and the `collectionView(..sizeForItemAt:)` code to set the minimum spacing to *15* and the *width* and the *height* to be 1/4 the size of the collection view's width: 
+ ```
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 15.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let collectionViewWidth = collectionView.bounds.width
+        return CGSize(width: collectionViewWidth/4, height: collectionViewWidth/4)
+    }
+```
+In this code, we are setting the height and width in proportion to just the width of the collection view since we both want a square sized item and to also have three columns with the spacing included. Now would be a good time to run the app to see if you have everything correct so far, you should see the collection view populated and look like this: 
+
+> ![Remove Main](./assets/collectionViewResult.png)
+
+
+## Selecting the images
+
+The sole point of this screen is to be able to *select* an image for our new habit, but we cant even do that yet! We can do this by using a handy method provided to us in the `UICollectionViewDelegate` that we implemented in our extension. Once we add this, a user will be able to select a cell: 
+
+```
+   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 2.0
+        cell?.layer.borderColor = UIColor.yellow.cgColor
+    }
+```
+
+Once again we create a cell using the selected item, and we will set the cells border to 2 and color it with a nice and ugly yellow! Now we can select a picture but now we run into another problem. We can select as many images as we want!
+
+>[action]
+> How can we only get one to be selected? I challenge you to venture off and discover for yourself how you might be able to do this, and if you are stuck just refer to the information below. 
+
+As it turns out, there is a property that we can set called `.allowsMultipleSelection` which will either allow for the collection view to allow multiple items to be selected or not. We do not want that behavior, so we will set it equal to false in our `viewDidLoad()`: 
+```
+    override func viewDidLoad() {
+        ...
+
+       collectionView.allowsMultipleSelection = false
+    }
+```
+Behind the scenes though, when you select an item in the collection view, and you go to select another one, then you are also going to be *deselecting* the last element, but we dont have any function that will handle *deselecting* the cell, so lets add that:  
+```
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 0.0
+    }
+```
+
+Thats it! We are now able to select an image just like we wanted to, but its not too much use to us since we need to use that image in our next view controller that we will create in the next section.
+
+# Summary 
+In this section, you learned how to create a collection view and also how to create a custom collection view cell. You drew apon your knowledge of Auto Layout to constrain the layouts that we created, and then followed readability practices with `extensions` to make our code more readable. You also learned how to implement the datasource, delegate and layout protocols for collection views and this allowed us to be able to display all the images of possible habits that we wanted. We made so much progress on this page! Take a break, you deserve it, and come back ready for part two of adding the habits. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
