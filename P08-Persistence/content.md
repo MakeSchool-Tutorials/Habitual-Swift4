@@ -141,3 +141,15 @@ Now that the user is able to load and create their habits we have to find a way 
     
 ######
 * If we do successfully decode our array of habits we then set that json data inside our User Defaults for htis given key!
+
+Good work ya'll, let's keep grinding! We are able to load, create, and save our habits, but what if the user wanted to **delete** a habit from User Defaults? Resulting in that habit being immediately deleted and not persisting to the next lifetime of the application.
+
+Let's create a delete habit function!
+
+```
+ // delete habit
+    mutating func delete(_ habitIndex: Int) {
+        self.habits.remove(at: habitIndex)
+        self.saveHabits()
+    }
+```
