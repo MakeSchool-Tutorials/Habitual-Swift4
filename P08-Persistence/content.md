@@ -196,3 +196,24 @@ Only a few more functions we need to add to make this persistence layer worth it
         return updatedHabit
     }
 ```
+
+* We creare a variable called updatedHabit that stores the habbit at the given index
+
+####
+* The next step is checking if that habit has been completed for the day
+    
+    - If the habit has not been completed then we increment the number of completions by 1
+
+    - If it has already been completed then we return out of this function with the same habit
+####
+* Line 5 can be a little difficult to read so let's read out it step by step
+    
+    - We create a constant that is going to store the value of the current habit's last completion date
+
+    ####
+    - With that value we check if that date was yesterday
+        
+        - If so then we increment the streak of the habit by 1
+    ####
+    - If the it wasn't completed yesterday we set the current streak to 1 denoting either it's a new habit or the user lost their streak on the habit
+
