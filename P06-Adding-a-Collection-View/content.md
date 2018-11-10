@@ -2,8 +2,6 @@
 title: Creating A Habit 
 slug: creating-habits-habitual
 ---
-TODO: NEED TO ADD THE NAVIGATION FROM TABLE VIEW HOME TO THE ADDHABBITVC AND PUT IT IN ITS OWN NAV CONTROLLER 
-
 
 Our app so far looks to have many of the barebones components that we need to atleast show our habits. However, how can we show off our habits without creating them first? Lets do that now!
 
@@ -15,7 +13,7 @@ To do this, we will setup a new view controller that will house a collection vie
 
 Next, we will allow our users to select an image from the collection view of their choosing and that image will be highlighted 
 
-Lastly, once the user is done with selecting their image, we will have a button that will allow them to pick a photo and to transition to the 
+Lastly, once the user is done with selecting their image, we will have a button that will allow them to pick a photo and to transition to the confrimation screen. 
 
 Lets get to it!
 
