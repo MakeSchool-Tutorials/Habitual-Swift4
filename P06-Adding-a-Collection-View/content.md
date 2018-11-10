@@ -49,7 +49,8 @@ Great, now let us constrain our new collection view and button
 >[action]
 > Using AutoLayout, constrain the collection view to have the following constraints(The height of the Collection View should be 0.75 proportional to the height of the superview):
 
-> ![Remove Main](./assets/collectionViewConstraints.png)
+![Remove Main](./assets/collectionViewConstraints.png)
+
 > Also Contrain the button to have a *height* of  *50* and *trailing and leading spaces* to be *15* and the bottom to be aligned *20* from the bottom
 
 Our resulting `AddhabitViewController` should look like this:
