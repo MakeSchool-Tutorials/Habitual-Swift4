@@ -17,8 +17,6 @@ Easy enough, now we need to add our UI elements, and constrain them also create 
 
 > ![Remove Main](./assets/confirmHabitViewController.png)
 
-Now we can reference our new view controller, so let us navigate from our `AddHabitViewController` to our new `ConfirmHabitViewController`
-
 >[action]
 > We need to create an `Habit.Image` variable that will be set by the `AddHabitViewController` but will live as a variable in the `ConfirmHabitViewController`
 ```
