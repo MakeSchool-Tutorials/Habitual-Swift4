@@ -19,3 +19,38 @@ In alot of ways persistence can be thought of as these soy sauce packets. The re
 In more ways than one, persistence in our application acts the same way! We are trusting the application to store our data even after the user exits out of our application. The only time this changes is if the user deletes the application ... in other words, opening the soy sauce packet.
 
 In our application Habitual, we want to be able to persist habits after the user exits the application or in other words save the user's habits.
+
+```
+struct PersistenceLayer {
+    
+    // MARK: - VARS
+    
+    // Line 1
+    private(set) var habits: [Habit] = []
+    
+    // Line 2
+    private static let userDefaultsHabitsKeyValue = "HABITS_ARRAY"
+    
+    init() {
+        // Line 3
+        self.loadHabits()
+    }
+}
+```
+
+Introducing our first code snippet, lets analyze what is happening!
+
+* Creating an *array* of habits, but what's this **private(set)** we are seeing? 
+       
+    - We are making a setter variable which means that we can write to our array of habits
+
+    - We are using private because we only want our array of habits to be accessbile through our persistence layer
+
+* This constant is created as a key in User Defaults to store our array of habits
+
+    - User Defaults are used to store basic data types as long as the app is installed. Basic data types include strings, floats, arrays, bools, etc.
+
+    - We are making this constant static because we only want one instance of this key no matter how many times this persistence layer is instantiated
+
+
+    
