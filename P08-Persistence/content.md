@@ -22,7 +22,7 @@ In our application Habitual, we want to be able to persist habits after the user
 
 #### *To start off lets create a PersistenceLayer.swift file* ####
 
-#####Lets add this to our Persistence Layer
+##### Lets add this to our Persistence Layer
 
 ```
 struct PersistenceLayer {
