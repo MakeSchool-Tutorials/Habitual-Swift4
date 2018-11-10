@@ -82,3 +82,24 @@ As a developer we are concerned firstly, with what the user is interacting with 
 * Grab our array of habits from our User Defaults for the given key we made earlier
 
 * Decode the json data that it gives us into a swift Habit object, and lastly populate our array of habits with our new Habit object!
+
+Now that the user is able to load a collection of their habits, they have to have a way to create a habit and persist it!
+
+##### Shall we create a createNewHabit function? 
+
+```
+ // Line 1
+ @discardableResult
+    
+    // Line 2
+    mutating func createNewHabit(name: String, image: Habit.Images) -> Habit {
+
+        //Line 3
+        let newHabit = Habit(title: name, image: image)
+        self.habits.insert(newHabit, at: 0) // Prepend the habits to the array
+        self.saveHabits()
+        
+        return newHabit
+    }
+```
+
