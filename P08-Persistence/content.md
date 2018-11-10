@@ -52,5 +52,25 @@ Introducing our first code snippet, lets analyze what is happening!
 
     - We are making this constant static because we only want one instance of this key no matter how many times this persistence layer is instantiated
 
+As a developer we are concerned firstly, with what the user is interacting with therefore let is further analyze the loading of habits function for that is what the user will first be seeing, their habits on the screen.
 
-    
+##### Lets add this function to our persistence layer #####
+```
+    //load
+
+    // Line 1
+    private mutating func loadHabits() {
+
+        // Line 2
+        let userDefaults = UserDefaults.standard
+
+        // Line 3
+        guard
+            let habitData = userDefaults.data(forKey: PersistenceLayer.userDefaultsHabitsKeyValue),
+            let habits = try? JSONDecoder().decode([Habit].self, from: habitData) else {
+                return
+        }
+        
+        self.habits = habits
+    }
+```
