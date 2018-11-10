@@ -74,3 +74,11 @@ As a developer we are concerned firstly, with what the user is interacting with 
         self.habits = habits
     }
 ```
+
+* We make this function mutating because we want to alter the copy of data that is assigned when a user instantiates this persistence layer, for more information on this refer to the difference between value and reference types!
+    
+* Instantiate our user defaults
+
+* Grab our array of habits from our User Defaults for the given key we made earlier
+
+* Decode the json data that it gives us into a swift Habit object, and lastly populate our array of habits with our new Habit object!
