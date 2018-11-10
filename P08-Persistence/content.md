@@ -229,3 +229,35 @@ Only a few more functions we need to add to make this persistence layer worth it
 
 ####
 * Lastly we save our changes made to our habits array and return the newly updated habit
+
+
+####
+We made it, with the help of two more functions our persistence layer will be good to go! If the user wanted the ability to swap habits from the order they came to reflect importance, we should give them that ability.
+
+```
+// Line 1
+ mutating func swapHabits(habitIndex: Int, destinationIndex: Int) {
+        let habitToSwap = self.habits[habitIndex]
+        self.habits.remove(at: habitIndex)
+        self.habits.insert(habitToSwap, at: destinationIndex)
+        self.saveHabits()
+    }
+    
+    // Line 2
+    mutating func setNeedsToReloadHabits() {
+        self.loadHabits()
+    }
+```
+
+#####
+* The first function takes to parameters a habitIndex and a destinationIndex representing the two indices of the habits you want to swap
+ 
+    - We remove the current habit from it's postion and insert it at the destination index
+    #####
+    - We then save the newly made changes to our habit array
+
+####
+* The next function comes in handy after we added a new habit and update the collection of habits present in the table view!
+
+
+Great job folks! Pat yourself on the shoulder and let's move towards the next step! **Integrating this persistence layer to our flow of existing logic comes next, stay tuned!**
