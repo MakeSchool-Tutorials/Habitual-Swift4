@@ -144,7 +144,7 @@ Now that the user is able to load and create their habits we have to find a way 
 
 Good work ya'll, let's keep grinding! We are able to load, create, and save our habits, but what if the user wanted to **delete** a habit from User Defaults? Resulting in that habit being immediately deleted and not persisting to the next lifetime of the application.
 
-Let's create a delete habit function!
+##### Let's create a delete habit function!
 
 ```
  // delete habit
@@ -157,7 +157,8 @@ Let's create a delete habit function!
     }
 ```
 
-Only a few more functions we need to add to make this persistence layer worth it's salt. We know that a user has the ability to complete a habit and increase their current streak, the question is how we persist that data and implement that logic. Let's add this markHabitAsCompleted function
+Only a few more functions we need to add to make this persistence layer worth it's salt. We know that a user has the ability to complete a habit and increase their current streak, the question is how we persist that data and implement that logic. 
+##### Let's add this markHabitAsCompleted function
 ```
  // Mark Habit Complete
 
@@ -217,3 +218,14 @@ Only a few more functions we need to add to make this persistence layer worth it
     ####
     - If the it wasn't completed yesterday we set the current streak to 1 denoting either it's a new habit or the user lost their streak on the habit
 
+####
+* We then check if the current streak of our chosen habit is better than that habit's best streak!
+
+####
+* It's important to update the completion date of the habit so that our previous logic is still accurate at a later time!
+
+####
+* We then change the chosen habit to reflect the updated habit with changes we made
+
+####
+* Lastly we save our changes made to our habits array and return the newly updated habit
