@@ -20,6 +20,10 @@ In more ways than one, persistence in our application acts the same way! We are 
 
 In our application Habitual, we want to be able to persist habits after the user exits the application or in other words save the user's habits.
 
+#### *To start off lets create a PersistenceLayer.swift file* ####
+
+#####Lets add this to our Persistence Layer
+
 ```
 struct PersistenceLayer {
     
@@ -109,3 +113,22 @@ Now that the user is able to load a collection of their habits, they have to hav
     - We are prepending our habit to our habit array as denoted by inserting at index 0
     - We then save our new habit and return that new habit
 
+#### Phewwww, we've been at it awhile, make sure you take some time to stretch.
+
+Now that the user is able to load and create their habits we have to find a way to **save** those changes!
+
+#### Lets add this function to our persistence layer
+
+```
+  //save
+    private func saveHabits() {
+        // Line 1
+        guard let habitsData = try? JSONEncoder().encode(self.habits) else {
+            fatalError("could not encode list of habits")
+        }
+        
+        // Line 2
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(habitsData, forKey: PersistenceLayer.userDefaultsHabitsKeyValue)
+    }
+```
