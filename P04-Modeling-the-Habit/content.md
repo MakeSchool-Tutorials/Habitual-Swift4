@@ -12,7 +12,7 @@ Now, let's create a `struct` so we can display a list of Habits.
 > Create a new **Swift** file and name it **Habit** and paste the following:
 ```swift
 import Foundation
-
+>
 struct Habit {
     var title: String
 }
@@ -47,18 +47,25 @@ class HabitsTableViewController: UITableViewController {
         return habits.count
     }
 >
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
->
+        var cell: UITableViewCell
+        if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+            cell = dequeueCell
+        } else {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        }
+    >
         let habit = habits[indexPath.row]
         cell.textLabel?.text = habit.title
->
+    >
         return cell
     }
 }
 ```
 
-Run the project and see the habits appear in the table view!
+Before you run the project, comment out the body of the **pressAddHabit** method.
+Now, you can run the project and see the habits appear in the table view!
 
 # Adding more Properties to Habit
 
@@ -70,7 +77,6 @@ As for the remaining properties, we'll be adding the following:
 - bestStreak
 - lastCompletionDate
 - numberOfCompletions
-- hasCompletedForToday (this will depend on the lastCompletionDate property, thus use a computed var vs a stored property)
 
 > [Challenge]
 > Add the missing properties in the `Habit struct`.
@@ -81,7 +87,9 @@ As for the remaining properties, we'll be adding the following:
 > [Solution]
 >
 ```swift
-struct Habit: {
+import UIKit
+>
+struct Habit {
     var title: String
     let dateCreated: Date
     var selectedImage: UIImage
@@ -91,6 +99,42 @@ struct Habit: {
     var lastCompletionDate: Date?
     var numberOfCompletions: Int
 >
+    var hasCompletedForToday: Bool {
+        return lastCompletionDate?.isToday ?? false
+    }
+}
+```
+
+> [Action]
+> Add the following file **DateExtensions.swift** and paste the following:
+```swift
+extension Date {
+    var stringValue: String {
+        return DateFormatter.localizedString(from: self, dateStyle: .medium, timeStyle: .none)
+    }
+>
+    var isToday: Bool {
+        let calendar = Calendar.current
+>
+        return calendar.isDateInToday(self)
+    }
+>
+    var isYesterday: Bool {
+        let calendar = Calendar.current
+>
+        return calendar.isDateInYesterday(self)
+    }
+}
+```
+
+> [Action]
+> In the **Habit.swift**, add the hasCompletedForToday property:
+>
+```swift
+import UIKit
+>
+struct Habit {
+    ...
     var hasCompletedForToday: Bool {
         return lastCompletionDate?.isToday ?? false
     }
@@ -157,16 +201,17 @@ The last step is to add a custom initializer and assign some default values to o
    - bestStreak
    - numberOfCompletions
 2. Write an initializer that takes in a `String` for the **title** and an `Habit.Images` for the **selectedImage**
+3. Update the **selectedImage: UIImage** to use the `Habits.Images` enum.
 >
 
 > [Solution]
 >
 ```swift
-struct Habit: {
+struct Habit {
   ...
   var title: String
   let dateCreated: Date = Date()
-  var selectedImage: UIImage
+  var selectedImage: Habit.Images
 >
   var currentStreak: Int = 0
   var bestStreak: Int = 0
@@ -183,3 +228,21 @@ struct Habit: {
   }
 }
 ```
+
+Before you run the project, update the `HabitsTableViewController`'s habits array to say:
+
+> [Action]
+```swift
+class HabitsTableViewController: UITableViewController {
+>
+    var habits: [Habit] = [
+        Habit(title: "Go to bed before 10p", image: Habit.Images.book),
+        Habit(title: "Drink 8 Glasses of Water", image: Habit.Images.book),
+        Habit(title: "Commit Today", image: Habit.Images.book),
+        Habit(title: "Stand up every Hour", image: Habit.Images.book)
+    ]
+    ...
+}
+```
+
+For now, nothing has changed on our table view. But, in the next section we'll build a custom cell to display more information about the habit.

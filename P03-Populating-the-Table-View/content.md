@@ -5,7 +5,7 @@ slug: populate-a-table-view
 
 # Populating the Table View
 
-A little about the `UITableViewController`, by default this class conforms the the necessary data source methods. These methods are required to populate a `UITableView`. Here are the two required methods:
+A little about the `UITableViewController`, by default this class conforms to the necessary data source methods. These methods are required to populate a `UITableView`. Here are the two required methods:
 
 ```swift
 // return the number of rows for the given section
@@ -27,7 +27,12 @@ class HabitsTableViewController: UITableViewController {
     }
 >
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        var cell: UITableViewCell
+        if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+            cell = dequeueCell
+        } else {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        }
 >
         cell.textLabel?.text = "Hello, world!"
 >
@@ -58,8 +63,9 @@ Again, let's look at the parameters and what we'll have to return.
 In the first method, it gave us a **tableView** and **section** value.
 This one gives us the same **tableView** but instead of the section number, an **indexPath** is given.
 
-**What is IndexPath**
-This is a class used by `UITableViewCell` to identify what cell we're referring to.
+### What is `IndexPath`?
+
+This is a class used by `UITableView` to identify what cell we're referring to.
 An `IndexPath` contains two properties; **section** and **row** both are `Int`s.
 
 Now, back to the second method.
@@ -67,7 +73,7 @@ This gives us an `IndexPath` which depends on what we returned in the first meth
 If in the first method returned 5, the second method will ask for 5 different cells.
 This will make more sense once we run a few examples.
 
-In our implementation for this method, we create a new cell by using `UITableViewCell(style:reuseIdentifier)` and update the cell's textLabel to say *Hello, World!*.
+In our implementation for this method, we create a new cell by using `UITableViewCell(style:reuseIdentifier:)` and update the cell's textLabel to say *Hello, World!*.
 `UITableViewCell` has four styles we could use.
 Later, we'll create our own custom cell.
 
@@ -77,7 +83,7 @@ Cool!
 
 # Populating a Table View from an Array
 
-This will help us aim closer to making out table view dynamic.
+This will help us aim closer to making our table view dynamic.
 Let's add a property to our `HabitsTableViewController`; we'll be using this new property to populate the table view:
 
 > [action]
@@ -85,6 +91,7 @@ Let's add a property to our `HabitsTableViewController`; we'll be using this new
 ```swift
 class HabitsTableViewController: UITableViewController {
     var names: [String] = ["Alan", "Adriana", "Adam", "Anne", "Mitchell", "Dani"]
+    ...
 }
 ```
 
@@ -100,7 +107,12 @@ class HabitsTableViewController: UITableViewController {
     }
 >
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        var cell: UITableViewCell
+        if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+            cell = dequeueCell
+        } else {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        }
 >
         let name = names[indexPath.row]
         cell.textLabel?.text = name
@@ -124,6 +136,7 @@ Here, we're going to be using one of the methods of our **tableView** to add a n
 > Add the following to **HabitsTableViewController.swift**
 ```swift
 class HabitsTableViewController: UITableViewController {
+    ...
 >
     override func viewDidLoad() {
         super.viewDidLoad()
