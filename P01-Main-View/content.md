@@ -6,7 +6,7 @@ slug: main-view
 In this section you are going to set up the main view in the application. Habitual is going to
 be an app that helps users track when they do or don't complete daily habits. In the main view,
 you want to have a table that will display habits that the user wants to track. You will also
-need a way to add new habits. Eventually, you will add a search function as well, but for now
+need a way to add new habits. For now,
 let's go ahead and set up the first view for it's basic functionality.
 
 # Creating and Connecting the View
@@ -25,7 +25,7 @@ use a shortcut that creates both files at the same time for you.
 > You will notice that the class you are subclassing is `UIViewController`. This default value is
 > perfect becaue that is what you want to subclass. Xib files are Xcode Interface Builder files.
 > If you have used a storyboard, you have used the Interface Builder before, only you were using a
-> storyboard, which is a collection on of Interfaces all together in one file. You will see this 
+> storyboard, which is a collection of Interfaces all together in one file. You will see this 
 > dialogue again throughout the tutorial as you create more views. The last step here is going to be
 > selecting both of the files you just created, right click on them and select *Create Subgroup from Selection*.
 > This will create a folder to contain your view files. It is always a good idea to stay organized from
@@ -61,7 +61,8 @@ effortlessly throughout the rest of your code.
 import UIKit
 >
 extension UIViewController {
-  static func instantiate() -> UIViewController {
+  static func instantiate() -> Se
+  lf {
     return self.init(nibName: String(describing: self), bundle: nil)
   }
 }
@@ -80,7 +81,7 @@ methods can not be overrode by a subclass. Both types of methods here are associ
 and not an *instance* of the class. 
 
 The method created here is called `instantiate()` because you are using it to create an instance of
-this class. That is also why the return type is `UIViewController`, you are creating a new instance
+this class. That is also why the return type is `Self`, you are creating a new instance
 of your class, and since it subclasses `UIViewController`, it can be returned by this method. Inside
 the method, you are simply returning an instance of the class calling the method, and loading a *nib*
 file (.xib) that has the same name as the class calling the method.
@@ -105,6 +106,8 @@ Okay, now that you have the cleanup out of the way, lets take a look at how you 
 > of the *Navigation Bar* throughout your app. Replace the code you have with the following:
 >
 ```
+window = UIWindow(frame: UIScreen.main.bounds)
+>
 // Create an instance of the main view controller
 let navigationController = UINavigationController()
 let mainViewController = MainViewController.instantiate()
@@ -133,9 +136,9 @@ to display your *MainViewController* as the root, it should display your view. L
 testing to see if everything is wired up correctly.
 
 > [action]
-> Open *MainViewController.xib*. In the bottom left corner of Xcode, locate the *Object Library* and drag in
+> Open *MainViewController.xib*. In the top right corner of Xcode, locate the *Object Library* and drag in
 > a **Label**.
-> ![Get a Label](./assets/label.png)
+> ![Get a Label](./assets/object-pallet.png)
 > Place the *Label* in the middle of the view like so:
 > ![Placing Label](./assets/place_label.png)
 > Now change the text of the label so that it reads `Hello World!`.
