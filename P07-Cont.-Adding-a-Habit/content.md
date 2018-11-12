@@ -66,7 +66,7 @@ Now we just have to handle the logic to create a habit once the user presses the
 
 How would you handle this logic? If you know exactly how you are going to handle this, then try it out. 
 
->[action]
+>[solution]
 > Write the logic within the `createHabitButtonPressed()` function to create a new habit and then dismiss the current `UINavigationViewController`. As a *Stretch Challenge* try and do some validation to check if the text field is empty so that somebody doesnt have a habit with no name. 
 
 ```
