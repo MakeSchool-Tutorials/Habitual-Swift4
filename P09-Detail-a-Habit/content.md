@@ -93,3 +93,11 @@ Let's add this code snippet to where we instnatiate our IBActions and IB Outlets
     }
 ```
 
+Lets attack this from a logical standpoint, the user is interacting with this complete button, subsequently calling the updateUI method.
+
+* Group 1 is in charge of updating the UIElements on screen to accurately reflect the changes made to the habit! As you can see we are changing the text values to match the habits current updated values
+
+* Group 2 is in charge of charge of checking if that habit has been completed today, what would make this logic break?
+
+
+
