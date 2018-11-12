@@ -98,7 +98,15 @@ Lets attack this from a logical standpoint, the user is interacting with this co
 * Group 1 is in charge of updating the UIElements on screen to accurately reflect the changes made to the habit! As you can see we are changing the text values to match the habits current updated values
 ######
 * Group 2 is in charge of charge of checking if that habit has been completed today, what would make this logic break?
+####
 
+If you start the application you can see that our detailed view does not display accurate information if we dont update the UI when the view ... ?
 
-
-
+Take a look and see if you can figure it out yourself!
+``` 
+override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
+```
