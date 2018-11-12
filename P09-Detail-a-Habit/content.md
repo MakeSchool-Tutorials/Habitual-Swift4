@@ -68,3 +68,28 @@ Let's add this code snippet to where we instnatiate our IBActions and IB Outlets
     }
 ```
 
+* If you refer back to our persistence layer tutorial page you'll remember making a markHabitAsCompleted method. When a user presses the complete button we want to have the added logic of marking that habit as completed in our persistence layer!
+
+*There goes that habitIndex we were talking about earlier! Take a guess as to why we pass in the habit index?*
+
+* As developers, we adopt a top down approach with what the user is interacting with down to its implementation. We have called an updateUI method that does not exist yet ... let's take a look!
+
+```
+  private func updateUI() {
+        // Line 1
+        title = habit.title
+        imageViewIcon.image = habit.selectedImage.image
+        labelCurrentStreak.text = "\(habit.currentStreak) days"
+        labelTotalCompletions.text = String(habit.numberOfCompletions)
+        labelBestStreak.text = String(habit.bestStreak)
+        labelStartingDate.text = habit.dateCreated.stringValue
+        
+        // Line 2
+        if habit.hasCompletedForToday {
+            buttonAction.setTitle("Completed for Today!", for: .normal)
+        } else {
+            buttonAction.setTitle("Mark as Completed", for: .normal)
+        }
+    }
+```
+
