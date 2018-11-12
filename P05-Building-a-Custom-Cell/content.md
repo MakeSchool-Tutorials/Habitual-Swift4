@@ -31,17 +31,15 @@ This is how the properties should look.
 
 Now let's go back to the cell's design. In the XIB file, place a UIImageView, and two `UILabel`s. By now you already know how to add constraints to them. A good idea is to group them in a UIStackView. Take into consideration that we have two labels in the same line. If there is a habit with a really long name, we want that content to be shown incomplete while keeping the streak count visible. Make the changes in CHP & CCRP to make this possible.
 
-Your values for the `UILabel` with the name should be something like this.
+For the title label, the values for this `UILabel` should be something like this.
 
 ![constraints](./assets/constraints.png)
 
 # Connecting the UI
 
-Add the corresponding outlets to the .swift file and make sure to connect them with the elements in the XIB file.
+Add the corresponding outlets to the HabitTableViewCell.swift file and make sure to connect them with the elements in the XIB file.
 
 ```
-// MARK: - IBACTIONS
-
   @IBOutlet weak var imageViewIcon: UIImageView!
   @IBOutlet weak var labelHabitTitle: UILabel!
   @IBOutlet weak var labelStreaks: UILabel!
@@ -51,7 +49,7 @@ Add the corresponding outlets to the .swift file and make sure to connect them w
 
 We need a way to tell the `UITableView` to use our new cell instead of the default cell. To do that we register the XIB file in the view controller that has the `UITableView`.
 
-Add the following code to `HabitTableViewCell`
+First, add the following code to `HabitTableViewCell`
 
 ```
 // Set the identifier for the custom cell
@@ -63,7 +61,7 @@ static var nib: UINib {
 }
 ```
 
-Now let's go to `HabitsTableViewController` to finish registering the cell.
+Then, open `HabitsTableViewController.swift` to finish registering the cell.
 Add the following line of code inside the `viewDidLoad()` method.
 
 ```
@@ -96,17 +94,26 @@ Here we are creating cells of type `HabitTableViewCell` and reusing them with ou
 
 Right now our cells are empty. We need to give them a habit to populate their UI elements.
 
-Create an array of type `Habit` and add some test instances.
-
-```
-var habits = [Habit]()
-```
-
 Include these lines before returning the cell.
 
 ```
 let habit = habits[indexPath.row]
 cell.configure(habit)
+```
+
+Your tableView(tableView:cellForRowAt:) should look like this:
+```swift
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: HabitTableViewCell.identifier,
+            for: indexPath
+            ) as! HabitTableViewCell
+>
+        let habit = persistance.habits[indexPath.row]
+        cell.configure(habit)
+>
+        return cell
+    }
 ```
 
 Here we take a habit from the array that corresponds to the index of the cell. Then we call a method call configure in the cell and send the habit. This method doesn't exist yet. Let's go back to `HabitTableViewCell` and create it.
@@ -125,4 +132,4 @@ func configure(_ habit: Habit) {
 }
 ```
 
-This method sets the contents of the `UIImageView`, the `UILabel`s and evaluates if the cell should show the checkmark or the arrow.
+This method sets the contents of the `UIImageView`, the `UILabel`s and evaluates if the cell should show the checkmark or the arrow depending if the habit is completed.
