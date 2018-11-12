@@ -35,8 +35,8 @@ It is okay to deviate from these settings though, and that is exactly what you a
 
 > [action]
 > In the *File Navigator* on the left hand side, right click on *Main.storyboard* and delete it, moving
-> it to the trash. Next, click on the project file at the top of the *File Navigator*. Uunder,
-> *Deployment Information* find the field called *Main Interface* and clear out the name the value there.
+> it to the trash. Next, click on the project file at the top of the *File Navigator*. Under,
+> *Deployment Information* find the field called *Main Interface* and clear out the name value shown in the screenshot.
 > ![Remove Main](./assets/remove_main.png)
 
 With those first two steps out of the way, you're well on your way to getting this app up and running
@@ -72,7 +72,7 @@ you have hooked up the settings correctly. You set the background to green so th
 the launch screen. The last step is to set the `rootViewController` of the *window* to the controller that
 you intialized, and then set the *window* to be visible using `makeKeyAndVisible()`.
 
-Go ahead and run your project now and make sure that when it loads up you see the greeb screen. If you are
+Go ahead and run your project now and make sure that when it loads up you see the green screen. If you are
 seeing nothing but a black screen, make sure that you check your code and the settings one more time to make
 sure that they match. If you are seeing the green screen you are ready to move on to the next section!
 
