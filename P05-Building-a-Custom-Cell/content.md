@@ -101,18 +101,16 @@ let habit = habits[indexPath.row]
 cell.configure(habit)
 ```
 
-Your tableView(tableView:cellForRowAt:) should look like this:
+Your `tableView(tableView:cellForRowAt:)` should look like this:
 
 ```swift
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: HabitTableViewCell.identifier,
             for: indexPath
             ) as! HabitTableViewCell
->
         let habit = persistance.habits[indexPath.row]
         cell.configure(habit)
->
         return cell
     }
 ```
