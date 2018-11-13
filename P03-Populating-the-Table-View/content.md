@@ -100,6 +100,8 @@ class HabitsTableViewController: UITableViewController {
 > Update the two table view methods to populate the table view to show the Strings from the names array.
 >
 
+<!--  -->
+
 > [solution]
 ```swift
 class HabitsTableViewController: UITableViewController {
@@ -135,8 +137,8 @@ Give it a run and see if the names appear on the table view!
 
 Here, we're going to be using one of the methods of our **tableView** to add a new row to the table view by pressing a button.
 
-> [action]
-> Add the following to **HabitsTableViewController.swift**
+Add the following to **HabitsTableViewController.swift**
+
 ```swift
 class HabitsTableViewController: UITableViewController {
     ...
@@ -164,7 +166,7 @@ extension HabitsTableViewController {
     }
 }
 ```
->
+
 
 Here, we add a `UIBarButtonItem` to the right side of the navigationItem and when the user taps on the button, it will invoke **pressAddHabit**.
 There, we'll add *Hello, World!* to the front of the names array.
