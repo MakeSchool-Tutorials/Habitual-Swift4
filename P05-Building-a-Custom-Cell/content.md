@@ -6,9 +6,9 @@ slug: building-a-custom-cell
 # Creating a custom cell
 
 For the table we just created we'll be using a custom cell. Sometimes it's easier to use the default cell if the content is simple. For this app we need more than a label in the cell's content. It should look like this:
-```
+
 ![Cell](assets/Cell.png "custom cell")
-```
+
 > [action]
 > Create a new file. File -> New -> File -> Cocoa Touch Class -> Next
 >
@@ -24,17 +24,17 @@ This will create two new files. One will be the XIB file, where we'll arrange al
 >Next select an Accessory, choose the option "Disclosure indicator", this is the arrow that you see in the right side of the cell. Later we'll add the logic to change the accessory for a Checkmark when the habit is completed.
 
 This is how the properties should look.
-```
+
 ![cellProperties](assets/cellProperties.png "cell properties")
-```
+
 # Cell's content
 
 Now let's go back to the cell's design. In the XIB file, place a UIImageView, and two `UILabel`s. By now you already know how to add constraints to them. A good idea is to group them in a UIStackView. Take into consideration that we have two labels in the same line. If there is a habit with a really long name, we want that content to be shown incomplete while keeping the streak count visible. Make the changes in CHP & CCRP to make this possible.
 
 For the title label, the values for this `UILabel` should be something like this.
-```
+
 ![constraints](assets/constraints.png "constraints")
-```
+
 # Connecting the UI
 
 Add the corresponding outlets to the HabitTableViewCell.swift file and make sure to connect them with the elements in the XIB file.
@@ -102,6 +102,7 @@ cell.configure(habit)
 ```
 
 Your tableView(tableView:cellForRowAt:) should look like this:
+
 ```swift
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
