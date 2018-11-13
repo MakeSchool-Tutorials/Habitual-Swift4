@@ -21,7 +21,7 @@ By default, `UITableViewController` implements these methods and returns 0 for t
 
 > [action]
 > Add the following to **HabitsTableViewController.swift** file:
-
+>
 ```
 class HabitsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,6 +39,7 @@ class HabitsTableViewController: UITableViewController {
     }
 }
 ```
+>
 
 A few things here, we need to add `override` to both of these methods because each method is already implemented in our **superclass**, `UITableViewController`.
 Thus, if we want to *override* our parent's implementation, we have to add `override` in front of each method.
@@ -88,13 +89,15 @@ Let's add a property to our `HabitsTableViewController`; we'll be using this new
 > [action]
 > Add the following to **HabitsTableViewController.swift**:
 >
-
 ```
 class HabitsTableViewController: UITableViewController {
     var names: [String] = ["Alan", "Adriana", "Adam", "Anne", "Mitchell", "Dani"]
     ...
 }
 ```
+>
+
+<!--  -->
 
 > [challenge]
 > Update the two table view methods to populate the table view to show the Strings from the names array.
@@ -103,6 +106,7 @@ class HabitsTableViewController: UITableViewController {
 <!--  -->
 
 > [solution]
+>
 ```swift
 class HabitsTableViewController: UITableViewController {
 >
