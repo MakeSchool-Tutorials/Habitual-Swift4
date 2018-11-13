@@ -103,7 +103,7 @@ cell.configure(habit)
 
 Your `tableView(tableView:cellForRowAt:)` should look like this:
 
-```swift
+```
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: HabitTableViewCell.identifier,
