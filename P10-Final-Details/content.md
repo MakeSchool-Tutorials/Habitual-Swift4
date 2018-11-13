@@ -9,7 +9,7 @@ Our Habitual app is now able to track new habits. But we also want to be able to
 
 To do that let's add an **Edit** button in the left side of the navigation bar.
 
-This is what we want to achieve. Hopefully going to the gym is not the habit you want to delete when using the app for real purposes.
+This is what we want to achieve. Hopefully exercising is not the habit you want to delete when using the app for real purposes.
 
 ![edit](./assets/edit.png)
 
@@ -60,6 +60,26 @@ self.present(deleteAlert, animated: true)
 
 ```
 
+In the code above we actually created a custom init method for the UIAlertController. 
+
+Here's the extension you'll need for it to work.
+
+```swift
+extension UIAlertController {
+    convenience init(habitTitle: String, comfirmHandler: @escaping () -> Void) {
+        self.init(title: "Delete Habit", message: "Are you sure you want to delete \(habitTitle)?", preferredStyle: .actionSheet)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { _ in
+            comfirmHandler()
+        }
+        self.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        self.addAction(cancelAction)
+    }
+}
+```
+
 The final implementation of the method should look like this.
 
 ```
@@ -96,7 +116,7 @@ override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: Ind
 }
 ```
 
-This method will move the cell and call the method `swapHabits` in our persistence layer. Let's go there and write the method.
+This method will move the cell and call the method `swapHabits` in our persistence layer. Let's review the method.
 
 The method will receive the index of the habit we want to move and the new index it will have in the list.
 
@@ -130,4 +150,4 @@ There is a lot more you can do to make this app even better and to keep practici
 - Make it look good! Our first implementation was focused on getting it to work. Play with colors, fonts and sizes to make it look better.
 - Add a validation when selecting an icon and entering a title. Tell the user if they are missing something and think about what's the beast way to do this. Is it a hidden label? and alert?
 - Rearrange habits using tap and hold instead of the edit button.
-- Implement Search bar in the habit table.
+- Implement a Search Bar in the habits table.
