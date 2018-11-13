@@ -278,5 +278,39 @@ We made it, with the help of two more functions our persistence layer will be go
 ####
 * The next function comes in handy after we added a new habit and update the collection of habits present in the table view!
 
+# Integrating the persistence layer
 
-Great job folks! Pat yourself on the shoulder and let's move towards the next step! **Integrating this persistence layer to our flow of existing logic comes next, stay tuned!**
+Great job folks! Pat yourself on the shoulder and let's move towards the next step! Lets go back to `HabitsTableViewController` and create an isntance of our persistence layer
+
+```swift
+    private var persistance = PersistenceLayer()
+```
+
+Remember our test data? It's time to get rid of it since we'll be using our array stored in UserDefaults from now on. Let's make some changes to make sure of this.
+
+First lets change the method of the table's data source that says how many rows there will be.
+
+```swift
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return persistance.habits.count
+}
+```
+
+Now, before calling the `configure()` method on each cell. Let's grab the correct habit from the saved array.
+
+```swift
+ let habit = persistance.habits[indexPath.row]
+ ```
+
+Whenever we load this view controller, we want to load the habits. We can achieve that by adding the method `viewWillAppear()` and call our reload function from the persistence layer. Don't forget to tell the table to reload its content.
+
+```swift
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        persistance.setNeedsToReloadHabits()
+        tableView.reloadData()
+    }
+```
+
+That's it! We are now using our array of habits that lives in the persistence layer. This information will live as long as the app is installed in the phone.
