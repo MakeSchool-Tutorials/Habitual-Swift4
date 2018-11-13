@@ -60,7 +60,7 @@ self.present(deleteAlert, animated: true)
 
 ```
 
-In the code above we actually created a custom init method for the UIAlertController. 
+In the code above we actually created a custom init method for the UIAlertController.
 
 Here's the extension you'll need for it to work.
 
@@ -68,12 +68,12 @@ Here's the extension you'll need for it to work.
 extension UIAlertController {
     convenience init(habitTitle: String, comfirmHandler: @escaping () -> Void) {
         self.init(title: "Delete Habit", message: "Are you sure you want to delete \(habitTitle)?", preferredStyle: .actionSheet)
-        
+
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { _ in
             comfirmHandler()
         }
         self.addAction(confirmAction)
-        
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         self.addAction(cancelAction)
     }

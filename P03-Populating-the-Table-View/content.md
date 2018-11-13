@@ -146,10 +146,10 @@ Add the following to **HabitsTableViewController.swift**
 ```swift
 class HabitsTableViewController: UITableViewController {
     ...
->
+
     override func viewDidLoad() {
         super.viewDidLoad()
->
+
         setupNavBar()
     }
 }
@@ -158,11 +158,10 @@ extension HabitsTableViewController {
 
     func setupNavBar() {
         title = "Habitual"
->
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pressAddHabit(_:)))
         navigationItem.rightBarButtonItem = addButton
     }
->
+
     @objc func pressAddHabit(_ sender: UIBarButtonItem) {
         names.insert("Hello, World!", at: 0)
         let topIndexPath = IndexPath(row: 0, section: 0)

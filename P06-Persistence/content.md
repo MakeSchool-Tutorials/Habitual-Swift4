@@ -13,7 +13,7 @@ I understand how that can be confusing so let us add a picture for context.
 *Trust me this example is going somewhere*
 
 
-In alot of ways persistence can be thought of as these soy sauce packets. The reason being is that we can think of persistence as a way for us to be able to store data or in this case soy sauce! I can trust these packets to store the sauce even if I am not using them. The only time that changes is if I open the packet, resulting in losing the contents of the packet. 
+In alot of ways persistence can be thought of as these soy sauce packets. The reason being is that we can think of persistence as a way for us to be able to store data or in this case soy sauce! I can trust these packets to store the sauce even if I am not using them. The only time that changes is if I open the packet, resulting in losing the contents of the packet.
 
 In more ways than one, persistence in our application acts the same way! We are trusting the application to store our data even after the user exits out of our application. The only time this changes is if the user deletes the application ... in other words, opening the soy sauce packet.
 
@@ -38,15 +38,15 @@ enum Images: Int, Codable, CaseIterable {
 
 ```
 struct PersistenceLayer {
-    
+
     // MARK: - VARS
-    
+
     // Line 1
     private(set) var habits: [Habit] = []
-    
+
     // Line 2
     private static let userDefaultsHabitsKeyValue = "HABITS_ARRAY"
-    
+
     init() {
         // Line 3
         self.loadHabits()
@@ -57,12 +57,12 @@ struct PersistenceLayer {
 Introducing our first code snippet, lets analyze what is happening!
 
 Creating an *array* of habits, but what's this **private(set)** we are seeing?     
-    - We are making a setter variable which means that we can write to our array of habits
-    - We are using private because we only want our array of habits to be accessbile through our persistence layer
+  - We are making a setter variable which means that we can write to our array of habits
+  - We are using private because we only want our array of habits to be accessbile through our persistence layer
 
 This constant is created as a key in User Defaults to store our array of habits
-    - User Defaults are used to store basic data types as long as the app is installed. Basic data types include strings, floats, arrays, bools, etc.
-    - We are making this constant static because we only want one instance of this key no matter how many times this persistence layer is instantiated
+  - User Defaults are used to store basic data types as long as the app is installed. Basic data types include strings, floats, arrays, bools, etc.
+  - We are making this constant static because we only want one instance of this key no matter how many times this persistence layer is instantiated
 
 As a developer we are concerned firstly, with what the user is interacting with therefore let us further analyze the loading of habits function for that is what the user will first be seeing, their habits on the screen.
 
@@ -83,7 +83,7 @@ As a developer we are concerned firstly, with what the user is interacting with 
             let habits = try? JSONDecoder().decode([Habit].self, from: habitData) else {
                 return
         }
-        
+
         self.habits = habits
     }
 ```
@@ -104,7 +104,7 @@ Now that the user is able to load a collection of their habits, they have to hav
 ```
  // Line 1
  @discardableResult
-    
+
     // Line 2
     mutating func createNewHabit(name: String, image: Habit.Images) -> Habit {
 
@@ -112,16 +112,16 @@ Now that the user is able to load a collection of their habits, they have to hav
         let newHabit = Habit(title: name, image: image)
         self.habits.insert(newHabit, at: 0) // Prepend the habits to the array
         self.saveHabits()
-        
+
         return newHabit
     }
 ```
 
 What is this weird '@discardableResult' we are seeing? Well we add this decorator to this function because we are not going to be using the result of this function directly, if not the compiler will generate a warning for us!
- 
-    - We create a new habit with the attributes that the user passes in
-    - We are prepending our habit to our habit array as denoted by inserting at index 0
-    - We then save our new habit and return that new habit
+
+  - We create a new habit with the attributes that the user passes in
+  - We are prepending our habit to our habit array as denoted by inserting at index 0
+  - We then save our new habit and return that new habit
 
 Phewwww, we've been at it awhile, make sure you take some time to stretch.
 
@@ -138,7 +138,7 @@ Now that the user is able to load and create their habits we have to find a way 
         guard let habitsData = try? JSONEncoder().encode(self.habits) else {
             fatalError("could not encode list of habits")
         }
-        
+
         // Line 2
         let userDefaults = UserDefaults.standard
         userDefaults.set(habitsData, forKey: PersistenceLayer.userDefaultsHabitsKeyValue)
@@ -165,7 +165,7 @@ Good work ya'll, let's keep grinding! We are able to load, create, and save our 
     }
 ```
 
-Only a few more functions we need to add to make this persistence layer worth it's salt. We know that a user has the ability to complete a habit and increase their current streak, the question is how we persist that data and implement that logic. 
+Only a few more functions we need to add to make this persistence layer worth it's salt. We know that a user has the ability to complete a habit and increase their current streak, the question is how we persist that data and implement that logic.
 
 # Complete a habit
 
@@ -174,38 +174,38 @@ Only a few more functions we need to add to make this persistence layer worth it
 ```
  // Mark Habit Complete
 
-    // Line 1 
+    // Line 1
     mutating func markHabitAsCompleted(_ habitIndex: Int) -> Habit {
 
         // Line 2
-        var updatedHabit = self.habits[habitIndex] 
+        var updatedHabit = self.habits[habitIndex]
 
         // Line 3
         guard updatedHabit.hasCompletedForToday == false else { return updatedHabit }
-        
+
         // Line 4
         updatedHabit.numberOfCompletions += 1
-        
+
         // Line 5
         if let lastCompletionDate = updatedHabit.lastCompletionDate, lastCompletionDate.isYesterday {
             updatedHabit.currentStreak += 1
         } else {
             updatedHabit.currentStreak = 1
         }
-        
+
         // Line 6
         if updatedHabit.currentStreak > updatedHabit.bestStreak {
             updatedHabit.bestStreak = updatedHabit.currentStreak
         }
-        
+
         // Line 7
         let now = Date()
         updatedHabit.lastCompletionDate = now
-        
+
         // Line 8
         self.habits[habitIndex] = updatedHabit
         self.saveHabits()
-        
+
         return updatedHabit
     }
 ```
@@ -214,12 +214,12 @@ We creare a variable called updatedHabit that stores the habbit at the given ind
 
 
 The next step is checking if that habit has been completed for the day
-    
+
    - If the habit has not been completed then we increment the number of completions by 1
    - If it has already been completed then we return out of this function with the same habit
 
 Line 5 can be a little difficult to read so let's read out it step by step
-    
+
    - We create a constant that is going to store the value of the current habit's last completion date
    - With that value we check if that date was yesterday   
    - If so then we increment the streak of the habit by 1
@@ -244,7 +244,7 @@ We made it, with the help of two more functions our persistence layer will be go
         self.habits.insert(habitToSwap, at: destinationIndex)
         self.saveHabits()
     }
-    
+
     // Line 2
     mutating func setNeedsToReloadHabits() {
         self.loadHabits()
@@ -252,14 +252,14 @@ We made it, with the help of two more functions our persistence layer will be go
 ```
 
 The first function takes to parameters a habitIndex and a destinationIndex representing the two indices of the habits you want to swap
-    - We remove the current habit from it's postion and insert it at the destination index
+    - We remove the current habit from it's position and insert it at the destination index
     - We then save the newly made changes to our habit array
 
 The next function comes in handy after we added a new habit and update the collection of habits present in the table view!
 
 # Integrating the persistence layer
 
-Great job folks! Pat yourself on the shoulder and let's move towards the next step! Lets go back to `HabitsTableViewController` and create an isntance of our persistence layer
+Great job folks! Pat yourself on the shoulder and let's move towards the next step! Lets go back to `HabitsTableViewController` and create an instance of our persistence layer
 
 ```swift
     private var persistance = PersistenceLayer()
@@ -286,7 +286,7 @@ Whenever we load this view controller, we want to load the habits. We can achiev
 ```swift
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         persistance.setNeedsToReloadHabits()
         tableView.reloadData()
     }

@@ -10,20 +10,27 @@ Now, let's create a `struct` so we can display a list of Habits.
 
 > [action]
 > Create a new **Swift** file and name it **Habit** and paste the following:
+>
 ```swift
+>
 import Foundation
 >
 struct Habit {
+>
     var title: String
+>
 }
 ```
+>
 
 Here we've created a `struct` to hold our structured habit, like the title.
 Now, to use this `struct`, we'll have to create some habits in-code.
 
 > [action]
 > Replace the **names** array with the following:
+>
 ```swift
+>
 class HabitsTableViewController: UITableViewController {
 >
     var habits: [Habit] = [
@@ -35,34 +42,48 @@ class HabitsTableViewController: UITableViewController {
     ...
 }
 ```
+>
 
-> [Challenge]
-> Update the two table view methods to populate the table view using the array of habits.
+Update the two table view methods to populate the table view using the array of habits.
 
-> [Solution]
+> [solution]
+>
 ```swift
+>
 class HabitsTableViewController: UITableViewController {
 >
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return habits.count
-    }
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 >
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
-        if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
-            cell = dequeueCell
-        } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        }
-    >
-        let habit = habits[indexPath.row]
-        cell.textLabel?.text = habit.title
-    >
-        return cell
+    return habits.count
+>
+  }
+>
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  >
+    var cell: UITableViewCell
+  >  
+    if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
+  >
+      cell = dequeueCell
+  >
+      } else {
+  >
+      cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+  >
     }
+  >
+    let habit = habits[indexPath.row]
+  >
+    cell.textLabel?.text = habit.title
+  >
+    return cell
+  >
+  }
+  >
 }
+>
 ```
+>
 
 Before you run the project, comment out the body of the **pressAddHabit** method.
 Now, you can run the project and see the habits appear in the table view!
@@ -78,13 +99,12 @@ As for the remaining properties, we'll be adding the following:
 - lastCompletionDate
 - numberOfCompletions
 
-> [Challenge]
-> Add the missing properties in the `Habit struct`.
-> Keep in mind what the data types are.
-> Which property will need to be an Optional?
-> Which property can be changed? Or, should it be a `let` vs a `var`?
+Add the missing properties in the `Habit struct`.
+Keep in mind what the data types are.
+Which property will need to be an Optional?
+Which property can be changed? Or, should it be a `let` vs a `var`?
 
-> [Solution]
+> [solution]
 >
 ```swift
 import UIKit
@@ -104,30 +124,30 @@ struct Habit {
     }
 }
 ```
+>
 
-> [Action]
-> Add the following file **DateExtensions.swift** and paste the following:
+
+Add the following file **DateExtensions.swift** and paste the following:
+
 ```swift
 extension Date {
     var stringValue: String {
         return DateFormatter.localizedString(from: self, dateStyle: .medium, timeStyle: .none)
     }
->
+
     var isToday: Bool {
         let calendar = Calendar.current
->
         return calendar.isDateInToday(self)
     }
->
+
     var isYesterday: Bool {
         let calendar = Calendar.current
->
         return calendar.isDateInYesterday(self)
     }
 }
 ```
 
-> [Action]
+> [action]
 > In the **Habit.swift**, add the hasCompletedForToday property:
 >
 ```swift
@@ -146,11 +166,10 @@ struct Habit {
 The icons we'll have for each habit will be in-app icons.
 Meaning, we'll provide a fixed number of icons.
 
-> [Action]
+> [action]
 > Download [this](assets/Icons.zip) package of images and add each image to your **Assets.xcassets** file in your Xcode project.
-
-> [Action]
 > In **Habit.swift**, add the following enum:
+
 ```swift
 struct Habit {
     enum Images: Int, CaseIterable {
@@ -170,12 +189,12 @@ struct Habit {
         case search
         case sleep
         case tooth
->
+
         var image: UIImage {
             guard let image = UIImage(named: String(describing: self)) else {
                 fatalError("image \(self) not found")
             }
->
+
             return image
         }
     }
@@ -192,9 +211,9 @@ And for each case, you get the image by using `var image: UIImage`.
 
 The last step is to add a custom initializer and assign some default values to our `Habit` struct.
 
-> [Challenge]
-> Add the following properties to the Habit struct:
->
+
+Add the following properties to the Habit struct:
+
 1. Give default values to the following properties:
    - dateCreated
    - currentStreak
@@ -202,9 +221,9 @@ The last step is to add a custom initializer and assign some default values to o
    - numberOfCompletions
 2. Write an initializer that takes in a `String` for the **title** and an `Habit.Images` for the **selectedImage**
 3. Update the **selectedImage: UIImage** to use the `Habits.Images` enum.
->
 
-> [Solution]
+
+> [solution]
 >
 ```swift
 struct Habit {
@@ -231,10 +250,9 @@ struct Habit {
 
 Before you run the project, update the `HabitsTableViewController`'s habits array to say:
 
-> [Action]
 ```swift
 class HabitsTableViewController: UITableViewController {
->
+
     var habits: [Habit] = [
         Habit(title: "Go to bed before 10p", image: Habit.Images.book),
         Habit(title: "Drink 8 Glasses of Water", image: Habit.Images.book),

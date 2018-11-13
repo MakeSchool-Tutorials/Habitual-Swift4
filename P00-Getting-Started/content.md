@@ -55,15 +55,15 @@ be loaded when your app launches. You will setup this change in the `AppDelegate
 ```
 // Create and set the window to be the same size as the screen
 window = UIWindow(frame: UIScreen.main.bounds)
->
+
 // Create an instance of the main view controller
 let mainController = UIViewController()
 mainController.view.backgroundColor = .green
->
+
 // Tell the window to load the main controller as it's root view
 window!.rootViewController = mainController
 window!.makeKeyAndVisible()
->
+
 return true
 ```
 >
