@@ -7,7 +7,7 @@ slug: building-a-custom-cell
 
 For the table we just created we'll be using a custom cell. Sometimes it's easier to use the default cell if the content is simple. For this app we need more than a label in the cell's content. It should look like this:
 
-![Cell](./assets/Cell.png)
+![Cell](assets/Cell.png "custom cell")
 
 > [action]
 > Create a new file. File -> New -> File -> Cocoa Touch Class -> Next
@@ -25,7 +25,7 @@ This will create two new files. One will be the XIB file, where we'll arrange al
 
 This is how the properties should look.
 
-![cellProperties](./assets/cellProperties.png)
+![cellProperties](assets/cellProperties.png "cell properties")
 
 # Cell's content
 
@@ -33,7 +33,7 @@ Now let's go back to the cell's design. In the XIB file, place a UIImageView, an
 
 For the title label, the values for this `UILabel` should be something like this.
 
-![constraints](./assets/constraints.png)
+![constraints](assets/constraints.png "constraints")
 
 # Connecting the UI
 
