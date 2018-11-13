@@ -119,6 +119,7 @@ We need to assign the `collectionView` to register the cells that we just create
 
 >[action]
 > In `viewDidLoad()` add the following code: 
+>
 ```
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -128,16 +129,21 @@ We need to assign the `collectionView` to register the cells that we just create
     }
 }
 ```
+>
+
 Awesome! Before we jumpt right into the collection view methods, we will need to do some final setup of our view controller:
 
 >[action]
 > Add the following:
+>
 ```
     override func viewDidLoad() {
         ...
         setupNavBar()    
     }
 ```
+>
+
 We will have to define a setupNavBar function. Add the following code to the `setupNavBar()` function below the `viewDidLoad` method
 
 ```
@@ -153,11 +159,13 @@ Note the #selector which will mean that whenever our new cancel button is presse
 
 >[action]
 > Add the `cancelAddHabit()` function below the `setupNavBar()` function: 
+>
 ```
     @objc func cancelAddHabit(_ sender: UIBarButtonItem) {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 ```
+>
 
 ## CollectionView Extension
 
@@ -174,6 +182,7 @@ Instead, we are going to use an extension which is providing the same purpose.
 
 >[action]
 > create an `extension` below your `AddHabitViewController` and add the following code: 
+>
 ```
 class AddHabitViewController: UIViewController{
     ...
@@ -183,6 +192,7 @@ extension AddHabitViewController: UICollectionViewDataSource, UICollectionViewDe
 
 }
 ```
+>
 
 Xcode should now be yelling at us that our view controller does not conform to the `UICollectionViewDataSource` protocol. We can change this by clicking on the red box and clicking `fix` on the error message and it will give us our code stubs, or just add this code: 
 
@@ -205,6 +215,8 @@ We may be encountering more errors with our other missing protocols, but let us 
 The `collectionView(..cellForItemAt)` is an important function that will tell the collection view which item to display at the index path, this will make it really easy to use an array and use `indexpath.row` as an index. Do you have any ideas of what array could be the source of the data we need?
 
 What about the `Images` that belongs to our Habit model that we created earlier? We can use all the images that we are storing with our models that are getting pulled from our assets and use them to set the image in our cell that we created earlier. Let us create the array at the top of our `AddHabitViewController` and not in our `extension` like this:
+
+
 ```
 class AddHabitViewController: UIViewController {
     let habitImages = Habit.Images.allCases
@@ -217,6 +229,7 @@ We can also add to our collection view functions to reflect some of the ideas th
 
 >[action]
 > Set the number of items in `collectionView(..numberOfItemsInSection)` to be the length of our `habitImages` array and within the `collectionView(..cellForItemAt)`create a reusable cell and set the cell's image to be at the `indexPath.row` element in our `habitImages` array:
+>
 ```
 ...
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -235,6 +248,8 @@ We can also add to our collection view functions to reflect some of the ideas th
     }
 ...
 ```
+>
+
 Its coming along now! Our collection view knows exactly which element should populate the cell and it will also know how many elements it will need to have as well as the number of sections it needs.
 
 ## Cell Formatting 
@@ -252,17 +267,19 @@ Our content is all finished for our collection view, but now we need to do some 
         return CGSize(width: collectionViewWidth/4, height: collectionViewWidth/4)
     }
 ```
+
 In this code, we are setting the height and width in proportion to just the width of the collection view since we both want a square sized item and to also have three columns with the spacing included. Now would be a good time to run the app to see if you have everything correct so far. You should see the collection view populated and look like this: 
 
 > ![Remove Main](./assets/collectionViewResult.png)
 
 
-## Selecting the images
+# Selecting the images
 
 The sole point of this screen is to be able to *select* an image for our new habit, but we can't even do that, yet! We can do this by using a handy method provided to us in the `UICollectionViewDelegate` that we implemented in our extension. Once we add this, a user will be able to select a cell: 
 
 >[action]
 > In the extension, add the following:
+>
 ```
    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
@@ -270,15 +287,19 @@ The sole point of this screen is to be able to *select* an image for our new hab
         cell?.layer.borderColor = UIColor.yellow.cgColor
     }
 ```
+>
 
 Once again, we create a cell using the selected item, and we will set the cells border to 2 and color it with a nice and ugly yellow! Now we can select a picture but now we run into another problem. We can select as many images as we want!
 
 >[action]
 > How can we only get one to be selected? I challenge you to venture off and discover for yourself how you might be able to do this, and if you are stuck just refer to the information below. 
 
+<!--  -->
+
 > [soultion]
 >
 > As it turns out, there is a property that we can set called `.allowsMultipleSelection` on `UICollectionView` which will either allow for the collection view to allow multiple items to be selected or not. We do not want that behavior, so we will set it equal to false in our `viewDidLoad()`: 
+>
 ```
     override func viewDidLoad() {
         ...
@@ -286,6 +307,7 @@ Once again, we create a cell using the selected item, and we will set the cells 
        collectionView.allowsMultipleSelection = false
     }
 ```
+>
 
 Behind the scenes though, when you select an item in the collection view, and you go to select another one, then you are also going to be *deselecting* the last element, but we dont have any function that will handle *deselecting* the cell, so lets add that:  
 
@@ -297,6 +319,7 @@ Behind the scenes though, when you select an item in the collection view, and yo
         cell?.layer.borderWidth = 0.0
     }
 ```
+>
 
 Thats it! We are now able to select an image just like we wanted to, but its not too much use to us since we need to use that image in our next view controller that we will create in the next section.
 
