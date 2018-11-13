@@ -3,7 +3,7 @@ title: Adding a UITableView
 slug: adding-a-tableview
 ---
 
-Now it's time to add our `UITableView`.
+Now it's time to setup our `UITableView`.
 
 # Using a UITableViewController
 
