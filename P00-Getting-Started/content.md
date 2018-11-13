@@ -20,11 +20,15 @@ The first step is to create a new Xcode Project.
 
 > [action]
 > Open Xcode and create a new **Single View App** project.
-> ![New Project](./assets/new_project.png)
+
+![New Project](./assets/new_project.png)
+
+> [action]
 > Name your project `Habitual` and make sure that the *Language* is set to `Swift`.
 > You will not be using *Core Data*, *Unit Tests*, or *UI Tests* so make sure all of those options
 > are unchecked.
-> ![Name Project](./assets/name_project.png)
+
+![Name Project](./assets/name_project.png)
 
 # Removing Storyboards
 
@@ -34,19 +38,20 @@ Without them setting many of these defaults, it would be very complicated to set
 It is okay to deviate from these settings though, and that is exactly what you are going to do now.
 
 > [action]
-> In the *File Navigator* on the left hand side, right click on *Main.storyboard* and delete it, moving
-> it to the trash. Next, click on the project file at the top of the *File Navigator*. Under,
-> *Deployment Information* find the field called *Main Interface* and clear out the name value shown in the screenshot.
-> ![Remove Main](./assets/remove_main.png)
+> In the File Navigator on the left hand side, right click on `Main.storyboard` and delete it, moving
+> it to the trash. Next, click on the project file at the top of the File Navigator. Under,
+> Deployment Information find the field called Main Interface and clear out the name value shown in the screenshot.
+
+![Remove Main](./assets/remove_main.png)
 
 With those first two steps out of the way, you're well on your way to getting this app up and running
 with no storyboards! Before anything will actually show up, you need to change the main view that will
-be loaded when your app launches. You will setup this change in the *AppDelegate.swift* file.
+be loaded when your app launches. You will setup this change in the `AppDelegate.swift` file.
 
 > [action]
-> Open *AppDelegate.swift* and locate the *application(_: didFinishLaunchingWithOptions)* function. Replace
+> Open `AppDelegate.swift` and locate the `application(_: didFinishLaunchingWithOptions)` method. Replace
 > the code inside that function with the following:
->
+
 ```
 // Create and set the window to be the same size as the screen
 window = UIWindow(frame: UIScreen.main.bounds)
@@ -69,8 +74,8 @@ The first thing you need to do is create an instance of the `UIWindow` object an
 `main` screen's bounds. The next step is to create an instance of the main view controller, or the first
 controller, that you want to load. In this case, you are just creating a temporary controller to see if
 you have hooked up the settings correctly. You set the background to green so that it is different from
-the launch screen. The last step is to set the `rootViewController` of the *window* to the controller that
-you intialized, and then set the *window* to be visible using `makeKeyAndVisible()`.
+the launch screen. The last step is to set the `rootViewController` of the window to the controller that
+you intialized, and then set the window to be visible using `makeKeyAndVisible()`.
 
 Go ahead and run your project now and make sure that when it loads up you see the green screen. If you are
 seeing nothing but a black screen, make sure that you check your code and the settings one more time to make
