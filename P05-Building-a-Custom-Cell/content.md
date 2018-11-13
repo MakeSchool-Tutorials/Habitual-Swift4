@@ -104,15 +104,12 @@ cell.configure(habit)
 Your `tableView(tableView:cellForRowAt:)` should look like this:
 
 ```
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: HabitTableViewCell.identifier,
-            for: indexPath
-            ) as! HabitTableViewCell
-        let habit = persistance.habits[indexPath.row]
-        cell.configure(habit)
-        return cell
-    }
+override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  let cell = tableView.dequeueReusableCell( withIdentifier: HabitTableViewCell.identifier, for: indexPath) as! HabitTableViewCell
+  let habit = persistance.habits[indexPath.row]
+  cell.configure(habit)
+  return cell
+}
 ```
 
 Here we take a habit from the array that corresponds to the index of the cell. Then we call a method call configure in the cell and send the habit. This method doesn't exist yet. Let's go back to `HabitTableViewCell` and create it.
