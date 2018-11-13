@@ -3,7 +3,7 @@ title: Adding a UITableView
 slug: adding-a-tableview
 ---
 
-TODO: add transition from P01
+Now it's time to add our `UITableView`.
 
 # Using a UITableViewController
 
@@ -40,7 +40,7 @@ Thus, we'll have to replace the view from a `UIView` to a `UITableView`:
 
 We're not quite done here. We'll need to connect some properties of the `UITableView` to the `HabitsTableViewController`. Can you guess what **two properties** we need to assign to the `HabitsTableViewController`? (Hint: select the `UITableView` and look in the **Connections Inspector**).
 
-> [Solution]
+> [solution]
 > Select the `UITableView` and open the **Connections Inspector** and connect both the **dataSource** and **delegate** with the `HabitsTableViewController` which is in our case the **File's Owner**.
 
 Run the project and you should see a blank table view.
