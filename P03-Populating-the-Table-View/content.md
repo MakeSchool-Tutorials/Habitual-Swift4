@@ -3,6 +3,8 @@ title: Populating a Table View
 slug: populate-a-table-view
 ---
 
+We have an empty table, it's time to get some content showing up.
+
 # Populating the Table View
 
 A little about the `UITableViewController`, by default this class conforms to the necessary data source methods. These methods are required to populate a `UITableView`. Here are the two required methods:
@@ -19,13 +21,12 @@ By default, `UITableViewController` implements these methods and returns 0 for t
 
 > [action]
 > Add the following to **HabitsTableViewController.swift** file:
-```swift
+
+```
 class HabitsTableViewController: UITableViewController {
->
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
->
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         if let dequeueCell = tableView.dequeueReusableCell(withIdentifier: "cell") {
@@ -33,9 +34,7 @@ class HabitsTableViewController: UITableViewController {
         } else {
             cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
         }
->
         cell.textLabel?.text = "Hello, world!"
->
         return cell
     }
 }
@@ -88,17 +87,20 @@ Let's add a property to our `HabitsTableViewController`; we'll be using this new
 
 > [action]
 > Add the following to **HabitsTableViewController.swift**:
-```swift
+>
+
+```
 class HabitsTableViewController: UITableViewController {
     var names: [String] = ["Alan", "Adriana", "Adam", "Anne", "Mitchell", "Dani"]
     ...
 }
 ```
 
-> [Challenge]
+> [challenge]
 > Update the two table view methods to populate the table view to show the Strings from the names array.
+>
 
-> [Solution]
+> [solution]
 ```swift
 class HabitsTableViewController: UITableViewController {
 >
@@ -121,6 +123,7 @@ class HabitsTableViewController: UITableViewController {
     }
 }
 ```
+>
 
 We changed the first method to return the same number as however many elements are in the **names** array.
 In the second method, we had to use the **indexPath.row** to check what cell we needed to populate.
@@ -161,6 +164,7 @@ extension HabitsTableViewController {
     }
 }
 ```
+>
 
 Here, we add a `UIBarButtonItem` to the right side of the navigationItem and when the user taps on the button, it will invoke **pressAddHabit**.
 There, we'll add *Hello, World!* to the front of the names array.
@@ -172,5 +176,6 @@ Run the project and tap the add button a few times.
 > [info]
 > it's important that you update the dataSource, in our case the names array, BEFORE you use `tableView.insertRows(at:with:)`. Otherwise, you'll get an inconsistency error in your debugger.
 > The table view will fact check by invoking the number of rows.
+>
 
 This is great! But, let's populate more than just a list of Strings.
