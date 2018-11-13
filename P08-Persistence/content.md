@@ -3,7 +3,6 @@ title: Persisting Habits
 slug: persisting-habits
 ---
 
-
 # Persistence #
 
 In this tutorial we are going to delve into the world of saving data in your application! **Persistence** is a key component in what allows us to manage state for an application.
@@ -20,9 +19,22 @@ In more ways than one, persistence in our application acts the same way! We are 
 
 In our application Habitual, we want to be able to persist habits after the user exits the application or in other words save the user's habits.
 
-#### *To start off lets create a PersistenceLayer.swift file* ####
+# Modifying our Habit struct #
 
-##### Lets add this to our Persistence Layer
+We are going to be using NSUSerDefaults to manage persistence in our app. To be able to save objects of type `Habit` we need to make a few changes in our struct to make it conform to the Encodable & Decodable protocol. We can achieve this by adding the `Codable` type to the struct.
+
+```swift
+struct Habit: Codable {
+...
+
+enum Images: Int, Codable, CaseIterable {
+...
+
+```
+
+# Creating the persistence layer
+
+> [action] To start off lets create a PersistenceLayer.swift file
 
 ```
 struct PersistenceLayer {
@@ -58,7 +70,7 @@ Introducing our first code snippet, lets analyze what is happening!
 
 As a developer we are concerned firstly, with what the user is interacting with therefore let us further analyze the loading of habits function for that is what the user will first be seeing, their habits on the screen.
 
-##### Lets add this function to our persistence layer #####
+> [action] Lets add this function to our persistence layer
 ```
     //load
 
@@ -89,7 +101,8 @@ As a developer we are concerned firstly, with what the user is interacting with 
 ######
 Now that the user is able to load a collection of their habits, they have to have a way to create a habit and persist it!
 
-##### Shall we create a createNewHabit function? 
+# Creating habits
+> [action] Shall we create a createNewHabit function? 
 
 ```
  // Line 1
@@ -119,7 +132,9 @@ Now that the user is able to load a collection of their habits, they have to hav
 
 Now that the user is able to load and create their habits we have to find a way to **save** those changes!
 
-#### Lets add this function to our persistence layer
+# Saving habits
+
+> [action] Lets add this function to our persistence layer
 
 ```
   //save
@@ -144,7 +159,8 @@ Now that the user is able to load and create their habits we have to find a way 
 
 Good work ya'll, let's keep grinding! We are able to load, create, and save our habits, but what if the user wanted to **delete** a habit from User Defaults? Resulting in that habit being immediately deleted and not persisting to the next lifetime of the application.
 
-##### Let's create a delete habit function!
+# Deleting habits
+> [action] Let's create a delete habit function!
 
 ```
  // delete habit
@@ -158,7 +174,10 @@ Good work ya'll, let's keep grinding! We are able to load, create, and save our 
 ```
 
 Only a few more functions we need to add to make this persistence layer worth it's salt. We know that a user has the ability to complete a habit and increase their current streak, the question is how we persist that data and implement that logic. 
-##### Let's add this markHabitAsCompleted function
+
+# Complete a habit
+> [action] Let's add this markHabitAsCompleted function
+
 ```
  // Mark Habit Complete
 
@@ -231,7 +250,7 @@ Only a few more functions we need to add to make this persistence layer worth it
 * Lastly we save our changes made to our habits array and return the newly updated habit
 
 
-####
+# Swap habits
 We made it, with the help of two more functions our persistence layer will be good to go! If the user wanted the ability to swap habits from the order they came to reflect importance, we should give them that ability.
 
 ```
