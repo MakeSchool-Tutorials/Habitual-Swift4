@@ -42,7 +42,7 @@ To finish off the actual layout on this view controller, let us add a button at 
 >[action]
 > In our interface objects library search for a `Button` and drag and drop it to the bottom of our view controller and change its text to *Pick Photo*
 
-Unfortunately, we have this new view controller, but no way to get to this view controller from our `HabitsTableViewController`, lets go back into our `HabitsTableViewController` and instead of the adding a new habbit in the add button, we are going to add the code that will allow us to navigate to our new `AddHabitViewController`:
+Unfortunately, we have this new view controller, but no way to get to this view controller from our `HabitsTableViewController`, lets go back into our `HabitsTableViewController` and instead of the adding a new habit in the add button, we are going to add the code that will allow us to navigate to our new `AddHabitViewController`:
 > [action]
 > In the `pressAddHabit()` function, create an instance of our new `AddHabitViewController` and also create a `UINavigationController` and put our new `AddHabitViewController` imbedded into our `UINavigationController` and then *present* the `UINavigationController`
 
@@ -79,7 +79,7 @@ In order to be able to show an item in our collection view, we have to first lay
 > Create a new Cocoa Touch Class and name it `HabitImageCollectionViewCell` and have it subclass `UICollectionViewCell` and also check the box that creates the XIB file for you and press next
 
 >[action]
-> In our new xib file, drag an *image view* from the object library and create an `IBOutlet` named *habitImage*. Move it to inside the cell and then constrain the new *image view* to be the size of the cell itself. I know this is alot of stuff to do, but you definitely can do this! As a hint, make sure to set your image view's auto layout *constraints to 0 on all sides*.
+> In our new xib file, drag an *image view* from the object library and create an `IBOutlet` named *habitImage*. Move it to inside the cell and then constrain the new *image view* to be the size of the cell itself. I know this is a lot of stuff to do, but you definitely can do this! As a hint, make sure to set your image view's auto layout *constraints to 0 on all sides*.
 
 Our new cell class is also going to need to use a reuse identifier to be set also and our imageView's content mode needs to be set to Aspect Fill :
 

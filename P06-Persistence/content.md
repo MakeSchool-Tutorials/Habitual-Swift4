@@ -13,7 +13,7 @@ I understand how that can be confusing so let us add a picture for context.
 *Trust me this example is going somewhere*
 
 
-In alot of ways persistence can be thought of as these soy sauce packets. The reason being is that we can think of persistence as a way for us to be able to store data or in this case soy sauce! I can trust these packets to store the sauce even if I am not using them. The only time that changes is if I open the packet, resulting in losing the contents of the packet.
+In a lot of ways persistence can be thought of as these soy sauce packets. The reason being is that we can think of persistence as a way for us to be able to store data or in this case soy sauce! I can trust these packets to store the sauce even if I am not using them. The only time that changes is if I open the packet, resulting in losing the contents of the packet.
 
 In more ways than one, persistence in our application acts the same way! We are trusting the application to store our data even after the user exits out of our application. The only time this changes is if the user deletes the application ... in other words, opening the soy sauce packet.
 
