@@ -167,7 +167,7 @@ The icons we'll have for each habit will be in-app icons.
 Meaning, we'll provide a fixed number of icons.
 
 > [action]
-> Download [this](assets/Icons.zip) package of images and add each image to your **Assets.xcassets** file in your Xcode project.
+> Download [this](https://github.com/MakeSchool-Tutorials/Habitual-Swift4/blob/master/P04-Modeling-the-Habit/assets/Icons.zip) package of images and add each image to your **Assets.xcassets** file in your Xcode project.
 > In **Habit.swift**, add the following enum:
 
 ```swift
