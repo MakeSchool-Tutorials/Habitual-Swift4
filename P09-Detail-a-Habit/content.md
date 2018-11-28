@@ -15,7 +15,22 @@ First, lets create a .xib and a corresponding .swift file for our `HabitDetailed
 
 **New => File => Cocoa Touch Class => "Name it HabitDetailedViewController" => Include Xib File**
 
+Before we continue to work with this file, we need a way to go from out main table view to the detail of the habit. To achieve this, we should implement the method `didSelectRowAt` in our `HabitsTableViewController`. Whenever we select a habit from the table, we will create an instance of the `HabitDetailedViewController` and send our selected habit and its index for further usage. Finally we call the method `pushViewController` to present the new view controller with a push animation.
+
+```
+override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+     let selectedHabit = persistance.habits[indexPath.row]
+     let habitDetailedVc = HabitDetailedViewController.instantiate()
+     habitDetailedVc.habit = selectedHabit
+     habitDetailedVc.habitIndex = indexPath.row
+     navigationController?.pushViewController(habitDetailedVc, animated: true)
+     }
+   
+```
+
 Let's model the xib as seen in the giphy recording up above. You should be familiar with placing elements in a      `UIStackView`.
+
 
 Now that we have our design implemented, lets connect our design elements to the corresponding .swift file!
 
