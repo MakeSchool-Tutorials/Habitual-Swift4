@@ -57,7 +57,7 @@ effortlessly throughout the rest of your code.
 > Create a new file, make sure you choose  *Swift* as the file type. Name the file
 > `UIViewControllerExtensions.swift` and replace the contents of the file with the following:
 >
-```
+```swift
 import UIKit
 >
 extension UIViewController {
