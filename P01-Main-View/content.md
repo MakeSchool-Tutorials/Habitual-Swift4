@@ -12,8 +12,7 @@ let's go ahead and set up the first view for it's basic functionality.
 # Creating and Connecting the View
 
 Since you removed the *Storyboard* file from your project, I am sure you are wondering how you
-will create this new view. There are different ways that you can do this, but you are going to
-use a shortcut that creates both files at the same time for you.
+will create this new view. There are different ways that you can do this. In this tutorial you'll use xib files.
 
 > [action]
 > Press `CMD+N` to create a new file. Select *Cocoa Touch Class* as the file type.
@@ -23,9 +22,9 @@ use a shortcut that creates both files at the same time for you.
 > set to *Swift*.
 > ![File Options](./assets/file_options.png)
 > You will notice that the class you are subclassing is `UIViewController`. This default value is
-> perfect becaue that is what you want to subclass. Xib files are Xcode Interface Builder files.
+> adequate because that is what you want to subclass from. Xib files are Xcode Interface Builder files.
 > If you have used a storyboard, you have used the Interface Builder before, only you were using a
-> storyboard, which is a collection of Interfaces all together in one file. You will see this 
+> storyboard, which is a collection of Interfaces all together in one file. You will see this
 > dialogue again throughout the tutorial as you create more views. The last step here is going to be
 > selecting both of the files you just created, right click on them and select *Create Subgroup from Selection*.
 > This will create a folder to contain your view files. It is always a good idea to stay organized from
@@ -47,7 +46,7 @@ view controller file that was created by default when you created your app.
 
 > [action]
 > Right click on the `ViewController.swift` file and delete it, moving it to the trash.
- 
+
 Awesome, now all the relics of the past are gone and you are free to move forward with your new
 way of adding views. There is one final step to be able to use our views properly though. You
 are going to create an extension of `UIViewController` that will help you to load your views
@@ -61,8 +60,7 @@ effortlessly throughout the rest of your code.
 import UIKit
 >
 extension UIViewController {
-  static func instantiate() -> Se
-  lf {
+  static func instantiate() -> Self {
     return self.init(nibName: String(describing: self), bundle: nil)
   }
 }
@@ -72,23 +70,23 @@ extension UIViewController {
 I know that is some funky looking code, but don't worry, it's actually very straightforward! The
 first thing you are doing is declaring you are making an *extension* on the class *UIViewController*.
 An extension is simply a way to add more functionality to a class that already exists. In this
-case, you don't have access to change the base code, so you use an *extension* to extend the 
+case, you don't have access to change the base code, so you use an *extension* to extend the
 capabilities of the class.
 
 Inside of the *extension* you are creating a *Static* class method. *Static* class methods function
-the same as methods declared with the *class* keyword. The main difference here is that *Static* 
+the same as methods declared with the *class* keyword. The main difference here is that *Static*
 methods can not be overrode by a subclass. Both types of methods here are associated with the class
-and not an *instance* of the class. 
+and not an *instance* of the class.
 
 The method created here is called `instantiate()` because you are using it to create an instance of
 this class. That is also why the return type is `Self`, you are creating a new instance
-of your class, and since it subclasses `UIViewController`, it can be returned by this method. Inside
-the method, you are simply returning an instance of the class calling the method, and loading a *nib*
+of your class and since it subclasses `UIViewController`, it can be returned by this method. Inside
+the method, you are returning an instance of the class calling the init method and loading a *nib*
 file (.xib) that has the same name as the class calling the method.
 
-That last part may seem a little confusing, so I want to clarify. The reason that you created the files
+That last part may seem a little confusing, so let's clarify. The reason that you created the files
 for the main view using the *Cocoa Touch Class* way, is because it names both files the same exact thing.
-It also makes the class declared inside the file have the same name. Because they all have the same name, 
+It also makes the class declared inside the file have the same name. Because they all have the same name,
 you can use `String(describing: self)` to get the name of the class calling the method as a `string`, and
 supply it to the `nibName` parameter.
 
@@ -100,35 +98,29 @@ Okay, now that you have the cleanup out of the way, lets take a look at how you 
 `instantiate()` method that you created.
 
 > [action]
-> Open *AppDelegate.swift* and locate the lines of code where you previously created the temporary
+> Open *SceneDelegate.swift* and locate the lines of code where you previously created the temporary
 > view controller. You are going to replace that code with some new code that instantiates your
 > main view. You will also add a `UINavigationController` so that you can take advantage
 > of the *Navigation Bar* throughout your app. Replace the code you have with the following:
 >
 ```
+guard let windowScene = (scene as? UIWindowScene) else { return }
 window = UIWindow(frame: UIScreen.main.bounds)
->
-// Create an instance of the main view controller
-let navigationController = UINavigationController()
+>     
+// Create an instance of the main view controller and a navigation controller
 let mainViewController = MainViewController.instantiate()
-navigationController.setViewControllers([mainViewController], animated: false)
->
-// Tell the window to load the main controller as it's root view
-window!.rootViewController = navigationController
-window!.makeKeyAndVisible()
->
-return true
+let navigationController = UINavigationController(rootViewController: mainViewController)
+>     
+// Tell the window to load the navigation controller as it's root view
+window?.rootViewController = navigationController
+window?.makeKeyAndVisible()
+window?.windowScene = windowScene
 ```
 >
 
-In the above code, you create an instance of *UINavigationController*. You then use your new `instantiate()`
-method to create an instance of the *MainViewController*. In the process you are loading the associated view
+In the above code, you use your new `instantiate()` method to create an instance of the *MainViewController*. In the process you are loading the associated view
 file, *MainViewController.xib*. Once you have a reference to your instance of *MainViewController* you set
-the views for the *UINavigationController*. 
-
-Behind the scenes, the navigation controller has an array that holds a reference to all of the views it is 
-currently tracking. By using the `setViewControllers` method you set that array to have a single value, your
-*MainViewController*. This effectively sets the 'root' of the navigation controller.
+it as the root view controller when instantiating the *UINavigationController*.
 
 Once the navigation controller is all set up, you set it to be the `rootViewController` for the window. Setting
 the `navigationController` as the root will make it the first view displayed in the app. Since you just set it up
@@ -153,6 +145,4 @@ previous steps and check that your code matches!
 # Getting Down to Business
 
 I know that was a lot of setup to check if everything was working. It was important to make sure you had
-wired everything up correctly before moving on. It would be much harder later on, once there is a bunch
-of code, to try and figure out why it might not be working.
-
+wired everything up correctly before moving on.

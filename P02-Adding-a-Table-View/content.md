@@ -21,8 +21,8 @@ class MainViewController: UITableViewController {
 Then, rename the `MainViewController` to say `HabitsTableViewController`:
 
 > [action]
-> Rename the `MainViewController` class in the **MainViewController.swift** file (also rename the swift file) to **HabitsTableViewController.swift**.
-> In the **AppDelegate.swift**, update the `MainViewController.instantiate()` to `HabitsTableViewController.instantiate()`
+> Rename the `MainViewController` class in the **MainViewController.swift** file (also rename the swift file) to **HabitsTableViewController.swift**. Click twice on the file's name to to this.
+> In the **SceneDelegate.swift**, update the `MainViewController.instantiate()` to `HabitsTableViewController.instantiate()`
 > Rename the xib file to be **HabitsTableViewController.xib**. Open that xib file and select the File's Owner object on the left. Then, open the **Attributes Inspector** and update the class to be `HabitsTableViewController`.
 >
 > ![xcode file's owner](assets/InterfaceBuilder-Files-Owner.png "InterfaceBuilder-Files-Owner")
@@ -32,11 +32,9 @@ The difference between a `UIViewController` and a `UITableViewController` is the
 Thus, we'll have to replace the view from a `UIView` to a `UITableView`:
 
 > [action]
-> From the **Object Library**, drag out a new `UITableView` onto the canvas next to the `UIView` we already have there. Do not add the `UITableView` **inside** the `UIView`.
->
-> Then, delete the `UIView`.
->
-> Select the **File's Owner** and open the **Connections Inspector**. Look for the **view** connection and connect it with the `UITableView`.
+> Delete the `UIView` we have right now with the label.
+> Then from the **Object Library**, drag out a new `UITableView` onto the canvas .
+> Select the **File's Owner** and open the **Connections Inspector** (right click). Look for the **view** connection and connect it with the `UITableView`.
 
 We're not quite done here. We'll need to connect some properties of the `UITableView` to the `HabitsTableViewController`. Can you guess what **two properties** we need to assign to the `HabitsTableViewController`? (Hint: select the `UITableView` and look in the **Connections Inspector**).
 

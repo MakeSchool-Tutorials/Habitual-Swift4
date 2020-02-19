@@ -19,7 +19,7 @@ This will create two new files. One will be the XIB file, where we'll arrange al
 > [action]
 > Go to the XIB file and make sure the cell is selected to set some properties in the Attributes Inspector.
 >
-> First add an identifier "habit cell" for cell reuse.
+> First add an identifier "HabitCell" for cell reuse.
 >
 >Next select an Accessory, choose the option "Disclosure indicator", this is the arrow that you see in the right side of the cell. Later we'll add the logic to change the accessory for a Checkmark when the habit is completed.
 
@@ -29,7 +29,13 @@ This is how the properties should look.
 
 # Cell's content
 
-Now let's go back to the cell's design. In the XIB file, place a UIImageView, and two `UILabel`s. By now you already know how to add constraints to them. A good idea is to group them in a UIStackView. Take into consideration that we have two labels in the same line. If there is a habit with a really long name, we want that content to be shown incomplete while keeping the streak count visible. Make the changes in CHP & CCRP to make this possible.
+Now let's go back to the cell's design. In the XIB file, place a UIImageView, and two `UILabel`s. By now you already know how to add constraints to them.
+
+A good idea is to group them in a UIStackView: pin the stackview to the edges of the cell, with distribution fill, spacing set to 10, and alignment set to fill.
+
+Give the image a width of 50. The content mode should be Aspect Fit.
+
+Take into consideration that we have two labels in the same line. If there is a habit with a really long name, we want that content to be shown incomplete while keeping the streak count visible. Make the changes in CHP & CCRP to make this possible.
 
 For the title label, the values for this `UILabel` should be something like this.
 
@@ -53,7 +59,7 @@ First, add the following code to `HabitTableViewCell`
 
 ```
 // Set the identifier for the custom cell
-static let identifier = "habit cell"
+static let identifier = "HabitCell"
 
 // Returning the xib file after instantiating it
 static var nib: UINib {
@@ -106,7 +112,7 @@ Your `tableView(tableView:cellForRowAt:)` should look like this:
 ```
 override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
   let cell = tableView.dequeueReusableCell( withIdentifier: HabitTableViewCell.identifier, for: indexPath) as! HabitTableViewCell
-  let habit = persistance.habits[indexPath.row]
+  let habit = habits[indexPath.row]
   cell.configure(habit)
   return cell
 }
@@ -120,7 +126,7 @@ func configure(_ habit: Habit) {
   self.labelHabitTitle.text = habit.title
   self.labelStreaks.text = "streak: \(habit.currentStreak)"
 
-  if habit.hasCompletedForToday {
+  if habit.completedToday {
     self.accessoryType = .checkmark
   } else {
    self.accessoryType = .disclosureIndicator
@@ -129,3 +135,7 @@ func configure(_ habit: Habit) {
 ```
 
 This method sets the contents of the `UIImageView`, the `UILabel`s and evaluates if the cell should show the checkmark or the arrow depending if the habit is completed.
+
+Run the app and see how it looks now. You should see the custom cell by this point.
+
+![table](assets/table.png "table")

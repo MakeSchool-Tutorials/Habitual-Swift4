@@ -23,7 +23,7 @@ struct Habit {
 ```
 >
 
-Here we've created a `struct` to hold our structured habit, like the title.
+Here we've created a `struct` to hold our structured habit and added a property for the title.
 Now, to use this `struct`, we'll have to create some habits in-code.
 
 > [action]
@@ -34,7 +34,7 @@ Now, to use this `struct`, we'll have to create some habits in-code.
 class HabitsTableViewController: UITableViewController {
 >
     var habits: [Habit] = [
-        Habit(title: "Go to bed before 10p"),
+        Habit(title: "Go to bed before 10pm"),
         Habit(title: "Drink 8 Glasses of Water"),
         Habit(title: "Commit Today"),
         Habit(title: "Stand up every Hour")
@@ -119,9 +119,6 @@ struct Habit {
     var lastCompletionDate: Date?
     var numberOfCompletions: Int
 >
-    var hasCompletedForToday: Bool {
-        return lastCompletionDate?.isToday ?? false
-    }
 }
 ```
 >
@@ -155,7 +152,7 @@ import UIKit
 >
 struct Habit {
     ...
-    var hasCompletedForToday: Bool {
+    var completedToday: Bool {
         return lastCompletionDate?.isToday ?? false
     }
 }
@@ -237,7 +234,7 @@ struct Habit {
   var lastCompletionDate: Date?
   var numberOfCompletions: Int = 0
 >
-  var hasCompletedForToday: Bool {
+  var completedToday: Bool {
       return lastCompletionDate?.isToday ?? false
   }
 >
@@ -254,7 +251,7 @@ Before you run the project, update the `HabitsTableViewController`'s habits arra
 class HabitsTableViewController: UITableViewController {
 
     var habits: [Habit] = [
-        Habit(title: "Go to bed before 10p", image: Habit.Images.book),
+        Habit(title: "Go to bed before 10pm", image: Habit.Images.book),
         Habit(title: "Drink 8 Glasses of Water", image: Habit.Images.book),
         Habit(title: "Commit Today", image: Habit.Images.book),
         Habit(title: "Stand up every Hour", image: Habit.Images.book)

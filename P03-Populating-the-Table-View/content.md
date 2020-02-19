@@ -20,7 +20,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 By default, `UITableViewController` implements these methods and returns 0 for the first method and a blank cell for the second method. We'll have to override these methods to provide our own implementation.
 
 > [action]
-> Add the following to **HabitsTableViewController.swift** file:
+> Add the following to **HabitsTableViewController.swift** file, after the **viewDidLoad** method:
 >
 ```
 class HabitsTableViewController: UITableViewController {
@@ -87,11 +87,11 @@ This will help us aim closer to making our table view dynamic.
 Let's add a property to our `HabitsTableViewController`; we'll be using this new property to populate the table view:
 
 > [action]
-> Add the following to **HabitsTableViewController.swift**:
+> Add the following to **HabitsTableViewController.swift**, at the top of the class, before **viewDidLoad**:
 >
 ```
 class HabitsTableViewController: UITableViewController {
-    var names: [String] = ["Alan", "Adriana", "Adam", "Anne", "Mitchell", "Dani"]
+    var names: [String] = ["Alan", "Braus", "Adriana", "Mitchell", "Dani", "Jess", "Dan", "Meredith", "Dan", "Milad"]
     ...
 }
 ```
@@ -141,7 +141,7 @@ Give it a run and see if the names appear on the table view!
 
 Here, we're going to be using one of the methods of our **tableView** to add a new row to the table view by pressing a button.
 
-Add the following to **HabitsTableViewController.swift**
+Add the following to **HabitsTableViewController.swift**. the extension should go at the end of the file, after the class ends.
 
 ```swift
 class HabitsTableViewController: UITableViewController {
@@ -149,7 +149,6 @@ class HabitsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupNavBar()
     }
 }
