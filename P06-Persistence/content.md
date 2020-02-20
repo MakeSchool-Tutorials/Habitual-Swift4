@@ -31,8 +31,6 @@ enum Images: Int, Codable, CaseIterable {
 ```
 struct PersistenceLayer {
 
-    // MARK: - VARS
-
     // Step 1
     private(set) var habits: [Habit] = []
 
