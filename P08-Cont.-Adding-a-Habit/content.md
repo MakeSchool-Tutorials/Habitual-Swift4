@@ -13,7 +13,14 @@ From there, a user could select an image of their choosing, but now we need to c
 >[action]
 > Create a new `UIViewController` and name it `ConfirmHabitViewController`, make sure to select the XIB option
 
-Easy enough, now we need to add our UI elements, and constrain them also create *Outlets* for the image view and name it  `habitImageView` and also create an outlet for the *textField* and name it  `habitNameInputField`. Make sure you also create an `IBAction` for the button and name it `createHabitButtonPressed`, we will use this to create our new Habit. I will let you decide how you should constrain the view, but a hint would be to use some stack views.
+We'll need a few things:
+
+1. Add UI elements and constrain them to look like the layout below.
+2. Also create *Outlets* for the image view and name it  `habitImageView`.  
+3. We'll need an outlet for the *textField* and name it  `habitNameInputField`.
+4. Make sure you also create an `IBAction` for the button and name it `createHabitButtonPressed`. We will use this to create our new Habit.
+
+I will let you decide how you should constrain the view, but a hint would be to use some stack views.
 
 > ![Remove Main](./assets/confirmHabitViewController.png)
 
@@ -33,14 +40,14 @@ Now that we have the UI done, we need to be able to navigate to our new `Confirm
 
 ```
     @IBAction func pickPhotoButtonPressed(_ sender: Any) {
-        guard let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first else {return}
+        guard let selectedIndexPath = selectedIndexPath else {return}
         let confirmHabitVC = ConfirmHabitViewController.instantiate()
         confirmHabitVC.habitImage = habitImages[selectedIndexPath.row]
         navigationController?.pushViewController(confirmHabitVC, animated: true)
     }
 ```
 
-We want our `ConfirmHabitViewController` to be updated with the new image every time the view appears, so it would be smart to create an `updateUI()` and call it in a `viewWillAppear`, note that we arent doing this in `viewDidLoad()`. You can delete `viewDidLoad()` since we will not need it for this case.
+We want our `ConfirmHabitViewController` to be updated with the new image every time the view appears, so it would be smart to create an `updateUI()` and call it in a `viewWillAppear`, note that we aren't doing this in `viewDidLoad()`. You can delete `viewDidLoad()` since we will not need it for this case.
 
 >[action]
 > Create a private `updateUI()` function, the `private` means that we can only access the function within the `ConfirmHabitViewController`.
@@ -67,7 +74,7 @@ Now we just have to handle the logic to create a habit once the user presses the
 How would you handle this logic? If you know exactly how you are going to handle this, then try it out.
 
 >[solution]
-> Write the logic within the `createHabitButtonPressed()` function to create a new habit and then dismiss the current `UINavigationViewController`. As a *Stretch Challenge* try and do some validation to check if the text field is empty so that somebody doesnt have a habit with no name.
+> Write the logic within the `createHabitButtonPressed()` function to create a new habit and then dismiss the current `UINavigationViewController`. As a *Stretch Challenge* try and do some validation to check if the text field is empty so that somebody doesn't have a habit with no name.
 >
 ```
 >

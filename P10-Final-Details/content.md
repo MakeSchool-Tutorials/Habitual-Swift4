@@ -23,7 +23,7 @@ navigationItem.leftBarButtonItem = self.editButtonItem
 Now let's include the method from the `UITableView` delegate that will let us delete entries.
 
 ```
-override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
   switch editingStyle {
     case .delete:
 
@@ -38,7 +38,7 @@ override func tableView(_ tableView: UITableView, commit editingStyle: UITableVi
 This method receives an `editingStyle` parameter. We first check if it corresponds to the delete option with a switch statement. If it matches, then we get hold of the habit from the array with the selected index and save the index we want to delete in another constant.
 
 ```
-let habitToDelete = persistance.habits[indexPath.row]
+let habitToDelete = persistence.habits[indexPath.row]
 let habitIndexToDelete = indexPath.row
 ```
 
@@ -52,7 +52,7 @@ Once the user confirms the action, the `UIAlertController` executes 2 things: de
 ```
 
 let deleteAlert = UIAlertController(habitTitle: habitToDelete.title) {
-self.persistance.delete(habitIndexToDelete)
+self.persistence.delete(habitIndexToDelete)
 tableView.deleteRows(at: [indexPath], with: .automatic)
 }
 
@@ -86,11 +86,11 @@ The final implementation of the method should look like this.
 override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
   switch editingStyle {
     case .delete:
-      let habitToDelete = persistance.habits[indexPath.row]
+      let habitToDelete = persistence.habits[indexPath.row]
       let habitIndexToDelete = indexPath.row
 
       let deleteAlert = UIAlertController(habitTitle: habitToDelete.title) {
-        self.persistance.delete(habitIndexToDelete)
+        self.persistence.delete(habitIndexToDelete)
         tableView.deleteRows(at: [indexPath], with: .automatic)
       }
 
@@ -112,7 +112,7 @@ Let's add this method.
 
 ```
 override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-  persistance.swapHabits(habitIndex: sourceIndexPath.row, destinationIndex: destinationIndexPath.row)
+  persistence.swapHabits(habitIndex: sourceIndexPath.row, destinationIndex: destinationIndexPath.row)
 }
 ```
 
@@ -133,7 +133,7 @@ Then it makes a copy of the habit. Removes the entry at the old index, and adds 
 
 # The end
 
-We did it! We completed our habits app. Along the way we learned:
+We did it! We completed our Habitual app. Along the way we learned:
 
 - Using XIB files
 - Setting Constraints
@@ -148,6 +148,6 @@ We did it! We completed our habits app. Along the way we learned:
 There is a lot more you can do to make this app even better and to keep practicing iOS development. Here are a few stretch challenges:
 
 - Make it look good! Our first implementation was focused on getting it to work. Play with colors, fonts and sizes to make it look better.
-- Add a validation when selecting an icon and entering a title. Tell the user if they are missing something and think about what's the beast way to do this. Is it a hidden label? and alert?
+- Add a validation when selecting an icon and entering a title. Tell the user if they are missing something and think about what's the best way to do this. Is it a hidden label? an alert?
 - Rearrange habits using tap and hold instead of the edit button.
 - Implement a Search Bar in the habits table.

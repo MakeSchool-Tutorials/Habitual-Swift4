@@ -3,19 +3,17 @@ title: Creating A Habit
 slug: creating-habits-habitual
 ---
 
-Our app so far looks to have many of the barebones components that we need to at least show our habits. However, how can we show off our habits without creating them first? Lets do that now!
+Our app so far looks to have many of the barebones components that we need to at least show our habits. However, how can we show off our habits without creating them first? Let's do that now!
 
 # Outline
 
-First, when we are going through the process of creating the habit, we will select an image that we want to represent our images
+First, when we are going through the process of creating the habit, we will select an image that represents the habit.
 
-To do this, we will setup a new view controller that will house a collection view and each cell will be an image view that contains a picture of a possible habit.
+To do this, we will setup a new view controller that will have a collection view and each cell will be an image with some icon representing a habit.
 
-Next, we will allow our users to select an image from the collection view of their choosing and that image will be highlighted
+Next, we will allow our users to select an image from the collection view. This image will be highlighted.
 
 Lastly, once the user is done with selecting their image, we will have a button that will allow them to pick a photo and to transition to the confirmation screen.
-
-Lets get to it!
 
 ## Creating the New ViewController
 
@@ -28,14 +26,14 @@ This will be the view controller that will have our collection view, now let us 
 >[action]
 > In our interface objects library, search for a `CollectionView` and drag and drop it into your new view controller.
 
-Collection Views might be a new concept to you, but not to worry, you have seen something similiar before. You can think of a collection view as a more flexible way to group a "collection" of items, just like a table view, but there is even more flexibility with collection views. They work just like table views, and in fact, they have to still know which view controller will be its delegate and its datasource just like a table view.
+Collection Views might be a new concept to you, but not to worry, you have seen something similiar before. You can think of a collection view as a more flexible way to group a "collection" of items, just like a table view, but there is even more flexibility with collection views. Just like a table view, they have to know which view controller will be its delegate and its datasource.
 
 >[action]
 > Before we forget, lets control drag from our collection view to the icon that says *file's Owner' and select just the boxes that say *datasource* and *delegate*
 
 > ![Remove Main](./assets/setCollectionView.png)
 
-Now our collection view knows what is responsible for handling the datasource and the delegate, in this case will be the `AddHabitViewController`.
+Now our collection view knows what is responsible for handling the datasource and the delegate, in this case it will be the `AddHabitViewController`.
 
 To finish off the actual layout on this view controller, let us add a button at the bottom that will be pressed once the user picks an image for their habit.
 
@@ -43,15 +41,16 @@ To finish off the actual layout on this view controller, let us add a button at 
 > In our interface objects library search for a `Button` and drag and drop it to the bottom of our view controller and change its text to *Pick Photo*
 
 Unfortunately, we have this new view controller, but no way to get to this view controller from our `HabitsTableViewController`, lets go back into our `HabitsTableViewController` and instead of the adding a new habit in the add button, we are going to add the code that will allow us to navigate to our new `AddHabitViewController`:
+
 > [action]
 > In the `pressAddHabit()` function, create an instance of our new `AddHabitViewController` and also create a `UINavigationController` and put our new `AddHabitViewController` imbedded into our `UINavigationController` and then *present* the `UINavigationController`
 
 ```
     @objc func pressAddHabit(_ sender: UIBarButtonItem) {
-        let addHabitVc = AddHabitViewController.instantiate()
-        let navigationController = UINavigationController(rootViewController: addHabitVc)
-        present(navigationController, animated: true, completion: nil)
-
+      let addHabitVC = AddHabitViewController.instantiate()
+      let navigationController = UINavigationController(rootViewController: addHabitVC)
+      navigationController.modalPresentationStyle = .fullScreen
+      present(navigationController, animated: true, completion: nil)
     }
 ```
 ## Constraining our CollectionView
@@ -63,7 +62,7 @@ Great, now let us constrain our new collection view and button
 
 > ![Remove Main](./assets/collectionViewConstraints.png)
 
-> Also Contrain the button to have a *height* of  *50* and *trailing and leading spaces* to be *15* and the bottom to be aligned *20* from the bottom
+> Also Constrain the button to have a *height* of  *50* and *trailing and leading spaces* to be *15* and the bottom to be aligned *20* from the bottom of the super view
 
 Our resulting `AddhabitViewController` should look like this:
 
@@ -71,9 +70,9 @@ Our resulting `AddhabitViewController` should look like this:
 
 ## CollectionView Cells
 
-We finally finished the initial setup of our AddHabitViewController. We can now move into some code to allow our collection view to show some stuff.
+We finally finished the initial setup of our AddHabitViewController. We can now move into some code to allow our collection view to show some content.
 
-In order to be able to show an item in our collection view, we have to first layout our cell that will be displayed as a single "item" in our collection view. This cell will simply just be an ImageView.
+To show an item in our collection view, we have to layout our cell that will be displayed as a single "item" in our collection view. This cell will simply just be an ImageView.
 
 >[action]
 > Create a new Cocoa Touch Class and name it `HabitImageCollectionViewCell` and have it subclass `UICollectionViewCell` and also check the box that creates the XIB file for you and press next
@@ -84,7 +83,7 @@ In order to be able to show an item in our collection view, we have to first lay
 Our new cell class is also going to need to use a reuse identifier to be set also and our imageView's content mode needs to be set to Aspect Fill :
 
 >[action]
-> Select the *collectionViewCell* and then in the *attributes inspector*, set the *identifier* to *habit image cell*. Then click the *imageView* and then click on the *attributes inspector* and set the *content mode* to *Aspect Fill*  
+> Select the *collectionViewCell* and then in the *attributes inspector*, set the *identifier* to *HabitImageCell*. Then click the *imageView* and then click on the *attributes inspector* and set the *content mode* to *Aspect Fit*  
 
 Now we are on our way to be able to write some code!
 
@@ -93,7 +92,7 @@ Now we are on our way to be able to write some code!
 
 ```
 class HabitImageCollectionViewCell: UICollectionViewCell {
-
+    @IBOutlet weak var habitImage: UIImageView!
     static let identifier = "habit image cell"
 
     static var nib: UINib {
@@ -103,12 +102,10 @@ class HabitImageCollectionViewCell: UICollectionViewCell {
     func setImage(image: UIImage){
         self.habitImage.image = image
     }
-
-    @IBOutlet weak var habitImage: UIImageView!
-
 }
 ```
-In this code, we are creating a static variable which allows us to access that property within our `AddHabitViewController`, and also allowing the cell's nib to be called and used for initialization in the future. The `setImage()` property allows us to be able to set the specific image for the cell that will be called in our datasource methods over in our `AddHabitViewController`.
+
+In this code, we are creating a static variable which allows us to access that property within our `AddHabitViewController`, and also allowing the cell's nib to be called and used for initialization in the future. The `setImage()` property sets the specific image for the cell that will be called in our datasource methods over in our `AddHabitViewController`.
 
 Enough talk of our `AddHabitViewController`, let us add the code we need to be able to finally display our images in the collection view.
 
@@ -131,7 +128,7 @@ override func viewDidLoad() {
 ```
 >
 
-Awesome! Before we jumpt right into the collection view methods, we will need to do some final setup of our view controller:
+Awesome! Before we jump right into the collection view methods, we will need to do some final setup of our view controller:
 
 >[action]
 > Add the following:
@@ -158,7 +155,7 @@ We will have to define a setupNavBar function. Add the following code to the `se
 
     }
 ```
-Note the #selector which will mean that whenever our new cancel button is pressed, it will look for a function called `cancelAddHabit()`. Let us add that code right below, and dont forget to add the @obj since the #selector syntax is part of objective C , but we wont go into depth about that right now.
+Note the #selector which will mean that whenever our new cancel button is pressed, it will look for a function called `cancelAddHabit()`. Let us add that code right below, and don't forget to add the @obj since the #selector syntax is part of objective C , but we wont go into depth about that right now.
 
 >[action]
 > Add the `cancelAddHabit()` function below the `setupNavBar()` function:
@@ -174,17 +171,7 @@ Note the #selector which will mean that whenever our new cancel button is presse
 
 ## CollectionView Extension
 
-To keep our code cleaner, we are going to use an `extension` that visually allows us to sepreate the collectionView related methods so that we can easily keep track of what is going on with our collection view, or else things would get pretty hectic.
-
-Using an `extension` here doesn't provide us with any major functional advantage, and would be the same as implementing the delegates as followed:
-
-```
-class AddHabitViewController: UIViewController,UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    ...
-}
-```
-
-Instead, we are going to use an extension which is providing the same purpose.
+To keep our code cleaner, we are going to use an `extension` that visually allows us to separate the collectionView related methods so that we can easily keep track of what is going on with our collection view, or else things would get pretty hectic.
 
 >[action]
 > create an `extension` below your `AddHabitViewController` and add the following code:
@@ -216,15 +203,14 @@ extension AddHabitViewController: UICollectionViewDataSource, UICollectionViewDe
 }
 ```
 
-We may be encountering more errors with our other missing protocols, but let us ignore that for now. We have a `collectionView(..numberOfItemsInSecion)` function that is telling us that we need to give the collection view the number of items it should be expecting per section. A collection view can have multiple sections. Lets say you wanted a section that will be designated possibly for cat photos or also maybe a section for dog pictures. In our case though, we will stick to one section and no cat or dog pictures :( Instead, we will have one section that will display 3 columns and as many rows as we may need depending on the amount of images that are provided. Although we have one section, we want our `collectionView(..numberOfItemsInSecion)` to be as many items as the elements that will be provided to us. Our resulting collection view will look like this:
+We may be encountering more errors with our other missing protocols, but let us ignore that for now. We have a `collectionView(..numberOfItemsInSecion)` function that is telling us that we need to give the collection view the number of items it should be expecting per section. We will have one section that will display 3 columns and as many rows as we may need depending on the amount of images that are provided. Although we have one section, we want our `collectionView(..numberOfItemsInSecion)` to be as many items as the elements that will be provided to us. Our resulting collection view will look like this:
 
 > ![Remove Main](./assets/collectionViewResult.png)
 
 
 The `collectionView(..cellForItemAt)` is an important function that will tell the collection view which item to display at the index path, this will make it really easy to use an array and use `indexpath.row` as an index. Do you have any ideas of what array could be the source of the data we need?
 
-What about the `Images` that belongs to our Habit model that we created earlier? We can use all the images that we are storing with our models that are getting pulled from our assets and use them to set the image in our cell that we created earlier. Let us create the array at the top of our `AddHabitViewController` and not in our `extension` like this:
-
+What about the `Images` property that belongs to our Habit model that we created earlier? We can use all the images that we are storing with our models that are getting pulled from our assets and use them to set the image in our cell that we created earlier. Let us create the array at the top of our `AddHabitViewController`.
 
 ```
 class AddHabitViewController: UIViewController {
@@ -261,23 +247,28 @@ func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath:
 ```
 >
 
-Its coming along now! Our collection view knows exactly which element should populate the cell and it will also know how many elements it will need to have as well as the number of sections it needs.
+It's coming along now! Our collection view knows exactly which element should populate the cell and it will also know how many elements it will need to have as well as the number of sections it needs.
 
 ## Cell Formatting
-Our content is all finished for our collection view, but now we need to do some formatting using our `UICollectionViewDelegateFlowLayout`. Our Xcode wont stop yelling at us until we finish this last one off. We are getting close:
+Our content is all finished for our collection view, but now we need to do some formatting using our `UICollectionViewDelegateFlowLayout`.
 
 >[action]
-> In the extension, add the `collectionView(..minimumLineSpacingForSectionAt:)` and the `collectionView(..sizeForItemAt:)` code to set the minimum spacing to *15* and the *width* and the *height* to be 1/4 the size of the collection view's width:
-
+> In the extension, add the `collectionView(..minimumLineSpacingForSectionAt:)` and the `collectionView(..sizeForItemAt:)` code to set the minimum spacing to *10* and the *width* and the *height* to be 1/4 the size of the collection view's width. The last part will add a little padding to our collection view in the left and right edges.
 
  ```
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15.0
+        return 10.0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewWidth = collectionView.bounds.width
         return CGSize(width: collectionViewWidth/4, height: collectionViewWidth/4)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 ```
 
@@ -288,58 +279,80 @@ In this code, we are setting the height and width in proportion to just the widt
 
 # Selecting the images
 
-The sole point of this screen is to be able to *select* an image for our new habit, but we can't even do that, yet! We can do this by using a handy method provided to us in the `UICollectionViewDelegate` that we implemented in our extension. Once we add this, a user will be able to select a cell:
+The sole point of this screen is to be able to *select* an image for our new habit, but we can't do that yet. We can do this with an animation, taking advantage of prebuilt method from UICollectionView.
 
 >[action]
-> In the extension, add the following:
+>Add the following at the top of **AddHabitViewController**
 >
 ```
-func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
->
-    let cell = collectionView.cellForItem(at: indexPath)
->
-     cell?.layer.borderWidth = 2.0
->
-     cell?.layer.borderColor = UIColor.yellow.cgColor
->
+var selectedIndexPath: IndexPath? {
+    didSet {
+        var indexPaths: [IndexPath] = []
+        if let selectedIndexPath = selectedIndexPath {
+            indexPaths.append(selectedIndexPath)
+        }
+        if let oldValue = oldValue {
+            indexPaths.append(oldValue)
+        }
+        collectionView.performBatchUpdates({
+            self.collectionView.reloadItems(at: indexPaths)
+        })
+    }
 }
 ```
 >
 
-Once again, we create a cell using the selected item, and we will set the cells border to 2 and color it with a nice and ugly yellow! Now we can select a picture but now we run into another problem. We can select as many images as we want!
+We created a property to track what indexPath we have selected. It has an observer to detect when that value changes. When we select a new indexPath, we get to the first if statement. If we selected the same item twice, we get to the second if statement. Then we call the method `performBatchUpdates` that will take care of reloading the corresponding items in the collection view. Now let's see where `selectedIndexPath` must change.
 
 >[action]
-> How can we only get one to be selected? I challenge you to venture off and discover for yourself how you might be able to do this, and if you are stuck just refer to the information below.
->
-
-<!--  -->
-
-> [soultion]
-> As it turns out, there is a property that we can set called `.allowsMultipleSelection` on `UICollectionView` which will either allow for the collection view to allow multiple items to be selected or not. We do not want that behavior, so we will set it equal to false in our `viewDidLoad()`:
+> Add the following method in the extension.
 >
 ```
-override func viewDidLoad() {
-    ...
->
-    collectionView.allowsMultipleSelection = false
->
+func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    if selectedIndexPath == indexPath {
+      selectedIndexPath = nil
+    } else {
+      selectedIndexPath = indexPath
+    }
+      return false
 }
 ```
 >
 
-Behind the scenes though, when you select an item in the collection view, and you go to select another one, then you are also going to be *deselecting* the last element, but we dont have any function that will handle *deselecting* the cell, so lets add that:  
+Here we are changing the value of our property right when the collection view detects we want to select an item (just before it actually gets selected). Let's have a visible difference between selected and non selected cells.
 
 > [action]
->
+> Update your method in the extension to match the following:
 ```
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 0.0
+func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitImageCollectionViewCell.identifier, for: indexPath) as! HabitImageCollectionViewCell
+    if indexPath == selectedIndexPath{
+        cell.setImage(image: habitImages[indexPath.row].image, withSelection: true)
+    }else{
+        cell.setImage(image: habitImages[indexPath.row].image, withSelection: false)
     }
+    return cell
+}
 ```
 >
 
-Thats it! We are now able to select an image just like we wanted to, but its not too much use to us since we need to use that image in our next view controller that we will create in the next section.
+We are sending over a boolean value when creating the cell to specify if it should be drawn differently if selected or not. Let's make the actual difference happen in the cell's class.
+
+> [action]
+> Update your method in HabitImageCollectionViewCell to match the following:
+```
+func setImage(image: UIImage, withSelection: Bool){
+    if withSelection {
+      self.habitImage.image = image.withRenderingMode(.alwaysOriginal)
+    }else{
+      self.habitImage.image = image.withRenderingMode(.alwaysTemplate)
+      self.habitImage.tintColor = UIColor.gray
+    }
+}
+```
+>
+
+We can change the tint color of images in a UIImageView if we set the image to be used as a template. That's what we do here if the item is not selected, we change the color to gray. When the item is indeed selected we want to show the image's original color.
 
 # Summary
-In this section, you learned how to create a collection view and also how to create a custom collection view cell. You drew apon your knowledge of Auto Layout to constrain the layouts that we created, and then followed readability practices with `extensions` to make our code more readable. You also learned how to implement the datasource, delegate and layout protocols for collection views and this allowed us to be able to display all the images of possible habits that we wanted. We made so much progress on this page! Take a break, you deserve it, and come back ready for part two of adding the habits.
+In this section, you learned how to create a collection view and also how to create a custom collection view cell that updates with animations. You also practiced your Auto Layout skills to constrain the layouts that we created, and then followed readability practices with `extensions` to make our code more readable. You also learned how to implement the datasource, delegate and layout protocols for collection views and this allowed us to be able to display all the images of possible habits that we wanted. We made so much progress on this page! Take a break, you deserve it, and come back ready for part two of adding the habits.
