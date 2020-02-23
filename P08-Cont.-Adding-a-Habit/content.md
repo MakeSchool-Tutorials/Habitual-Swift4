@@ -2,6 +2,7 @@
 title: Confirming the New Habit
 slug: confirming-then-new-habit
 ---
+
 # Overview
 
 Remember that in our last page, we create the collection view that showed possible images for our new habit.
@@ -26,6 +27,7 @@ I will let you decide how you should constrain the view, but a hint would be to 
 
 >[action]
 > We need to create an `Habit.Image` variable that will be set by the `AddHabitViewController` but will live as a variable in the `ConfirmHabitViewController`
+
 ```
 class ConfirmHabitViewController: UIViewController {
     ...

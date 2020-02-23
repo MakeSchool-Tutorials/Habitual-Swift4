@@ -129,6 +129,8 @@ Now that the user is able to load and create their habits we have to find a way 
         // Step 10
         let userDefaults = UserDefaults.standard
         userDefaults.set(habitsData, forKey: PersistenceLayer.userDefaultsHabitsKeyValue)
+        userDefaults.synchronize()
+
     }
 ```
 
@@ -208,7 +210,7 @@ Step 14:
    - We create a constant that is going to store the value of the current habit's last completion date
    - With that value we check if that date was yesterday   
    - If so then we increment the streak of the habit by 1
-   - If the it wasn't completed yesterday we set the current streak to 1 denoting either it's a new habit or the user lost their streak on the habit
+   - If it wasn't completed yesterday we set the current streak to 1 denoting either it's a new habit or the user lost their streak on the habit
 
 Step 15: We then check if the current streak of our chosen habit is better than that habit's best streak!
 
